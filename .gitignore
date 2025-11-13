@@ -118,6 +118,7 @@ web_modules/
 .env.production.local
 .env.local
 .env.api
+.env.*
 output/
 .example.env
 
