@@ -71,7 +71,7 @@ pipeline {
                     try {
                         echo "Ejecutando tests con el tag: ${tagsArgument}"
 
-                        sh "npx cucumber-js --profile api --tags \"${tagsArgument}\""
+                        sh "npx cucumber-js --profile api ${tagsArgument}"
                         
                     } catch (e) {
                         echo "Error durante la ejecución de pruebas: ${e.message}"
