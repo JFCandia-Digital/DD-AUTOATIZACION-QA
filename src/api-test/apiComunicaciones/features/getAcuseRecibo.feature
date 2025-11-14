@@ -1,4 +1,4 @@
-@API @AcuseRecibo
+@API @Comunicaciones @AcuseRecibo
 Feature: Feature: Flujo E2E - Despacho y Acuse de Recibo Multidestinatario
 
   Scenario: PDI despacha y todas las instituciones procesan sus pendientes

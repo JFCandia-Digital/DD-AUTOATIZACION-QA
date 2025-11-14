@@ -1,4 +1,4 @@
-@API @Comunicaciones
+@API @Comunicaciones @ComunicacionesId
 Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/:id"
 # =================================================================================
 # == Pruebas para método GET /comunicaciones/:id

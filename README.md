@@ -86,7 +86,7 @@ Después de cada ejecución, puedes generar un reporte HTML detallado ejecutando
 ```Bash
 npm run api-report
 ```
-Esto leerá los archivos JSON de Cucumber y generará un reporte visual en la carpeta /reports/html-report/.
+Esto leerá los archivos JSON de Cucumber y generará un reporte visual en la carpeta /reports.
 
 **Reporte JSON (Acuse de Recibo)**
 

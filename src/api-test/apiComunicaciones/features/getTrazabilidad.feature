@@ -1,4 +1,4 @@
-@API @Trazabilidad
+@API @Comunicaciones @Trazabilidad
 Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/:comunicacionId/trazabilidad"
 # =================================================================================
 # == Pruebas para método GET /comunicaciones/:comunicacionId/trazabilidad
