@@ -35,12 +35,13 @@ pipeline {
     stages {
         stage('Preparación') {
             steps {
-                withCredentials([secretFile(credentialsId: 'env-doc-digital', variable: 'DOTENV_CONTENT')]) {
-                    echo "Creando archivo .env..."
-                    sh 'echo "$DOTENV_CONTENT" > .env.api'
+                withCredentials([string(credentialsId: 'env-doc-digital', variable: 'DOTENV_CONTENT')]) {
+                    echo "Creando y formateando archivo .env..."
+                    sh 'echo "$DOTENV_CONTENT" | tr " " "\n" > .env.api'
                 }
                 echo "Instalando dependencias..."
                 sh 'npm install'
+                
                 echo "Eliminando carpeta de reportes antiguos."
                 sh 'rm -rf reports/html-report' 
                 sh 'rm -rf reports/json-acuse-recibo'
