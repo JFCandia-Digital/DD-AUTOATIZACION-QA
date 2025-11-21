@@ -85,7 +85,7 @@ const genericResponse = {
 
 const baseUsuarioEntidad = {
   "run": "number",
-  "dv": "string", 
+  "dv": "string",
   "correoInstitucional": "string",
   "cargo": "string",
   "entidad": {
@@ -105,7 +105,7 @@ const baseTareaRecepcion = {
   "entidadDestinatariaCodificadorId": "number",
   "entidadDestinatariaNombre": "string",
   "comunicacionId": "number",
-  "comunicacionMateria": "string", 
+  "comunicacionMateria": "string",
   "comunicacionFolio": "string",
   "tipoDocumentoOficial": "string",
   "estadoComunicacion": "string",
@@ -116,6 +116,21 @@ const baseTareaRecepcion = {
   "entidadCreadora": "string",
   "entidadCreadoraId": "number",
   "entidadCreadoraCodificadorId": "number",
+};
+
+const baseResultComunicacionDespachar = {
+  "comunicacionId": "number",
+  "folio": "string",
+  "materia": "string",
+  "tipoDocumento": "string",
+  "estado": "string",
+  "fechaActualizacion": "string",
+  "entidadCreadora": "string",
+  "entidadDespachadora": "string",
+  "entidadCreadoraId": "number",
+  "entidadDespachadoraId": "number",
+  "entidadCreadoraCodificadorId": "number",
+  "entidadDespachadoraCodificadorId": "number"
 };
 
 // Estructuras optimizadas
@@ -263,11 +278,58 @@ export const successStructures = {
     }
   },
 
+  "JSON_RESPONSE_GET_DESPACHAR_ID_": {
+    ...baseResponse,
+    "result": {
+      "idComunicacion": "number",
+      "estadoTramitacionDescripcion": "string",
+      "nombreEntidadDespachadora": "string",
+      "idEntidadDespachadora": "number",
+      "documento": {
+        "materia": "string",
+        "tipoDoc": "string",
+        "reservado": "boolean",
+        "isDatosSensibles": "boolean",
+        "infoCertificados": "object",
+        "codigoVerificacion": "string"
+      },
+      "infoVisaciones": "object",
+      "infoFirmas": [
+        {
+          "nivelLista": "number",
+          "firmantes": [baseFirmanteTipo2]
+        }
+      ],
+      "entidadDestinatarias": "object",
+      "infoCreacion": {
+        "nombreUsuarioCreador": "string",
+        "fechaCreacion": "string",
+        "fechaInicio": "string",
+        "nombreEntidadCreadora": "string",
+        "idEntidadCreadora": "number",
+        "entidadCreadoraCodificadorId": "object"
+      },
+      "destinatariosEmail": "object",
+      "tipoTramitacionDescripcion": "string",
+      "tipoVisacionDescripcion": "string",
+      "anexos": "object",
+      "infoFolioDespacho": "object"
+    }
+  },
+
   "COMUNICACION_DESPACHAR_EXITOSA": {
     ...baseResponse,
     "result": {
       "id": "number",
       "fechaDespacho": "string"
     }
+  },
+
+  "JSON_RESPONSE_BUSCAR_SALIENTES": {
+    ...baseResponse,
+    "result": [baseResultComunicacionDespachar],
+    "total_count": "number",
+    "total_pages": "number",
+    "page": "number"
   }
 };

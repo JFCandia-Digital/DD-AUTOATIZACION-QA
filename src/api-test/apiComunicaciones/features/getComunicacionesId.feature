@@ -5,9 +5,10 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/:id"
 # =================================================================================9
 
   Scenario: Enviar petición "GET" - "/comunicaciones/:id" con datos válidos
-    Given que realizo una petición "GET" a "/comunicaciones/1" con token "válido"
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que realizo una petición "GET" a "/comunicaciones/1" con token "válido"
     Then el estado de la respuesta debe ser 200
-    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_GET_DESPACHAR_ID"
+    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_GET_DESPACHAR_ID_"
     And la propiedad "timestamp" del cuerpo de la respuesta debe ser una fecha y hora actual
 
   Scenario Outline: Validar "GET" - "/comunicaciones/:id" con distintos token
@@ -29,13 +30,13 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/:id"
     And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
 
     Examples: Campos que fallan validación
-      | tipo_dato                | status | estructura              | campo_error | mensaje_error_esperado      |
-      | abc                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | true                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | 1.5                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | null                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | '                        | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | ' OR 1=1                 | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | ';--                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | 999999                   | 404    | ERROR_404_Not_Found     | "message"   | "Comunicación no encontrada." |
-      | 9223372036854775808      | 404    | ERROR_404_Not_Found     | "message"   | "Comunicación no encontrada." |
+      | tipo_dato           | status | estructura                         | campo_error | mensaje_error_esperado    |
+      | abc                 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | true                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      |                 1.5 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | null                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | '                   |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | ' OR 1=1            |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | ';--                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      |              999999 |    404 | ERROR_404_Not_Found_con_errorCause | "message"   | "Registro no encontrado." |
+      | 9223372036854775808 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
