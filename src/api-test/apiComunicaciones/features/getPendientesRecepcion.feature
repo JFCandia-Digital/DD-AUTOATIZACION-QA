@@ -85,23 +85,23 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/pendientes-recepci
 
     Examples:
       | campo              | valor                | status | estructura                                   | campo_error | mensaje_error_esperado |
-      | comunicacionId     |                    0 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | comunicacionId     |              -999999 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | comunicacionId     | -9223372036854775808 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde |           2025-10-05 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde | "2025/10/05"         |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde | abc                  |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde | true                 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde |             10:10:00 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta |           2025-10-05 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta | "2025/10/05"         |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta | abc                  |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta | true                 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta |             10:10:00 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | folio              | true                 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | folio              | ' OR 1=1             |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | materia            | true                 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | materia            | ' OR 1=1             |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | tipoDocumento      |                    0 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | tipoDocumento      |              -999999 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
-      | pageNumber         |                    0 |    200 | JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS | "result"    | []                     |
+      | comunicacionId     |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | comunicacionId     |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | comunicacionId     | -9223372036854775808 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionDesde |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionDesde | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionDesde | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionDesde | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionDesde |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionHasta |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionHasta | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionHasta | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionHasta | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | fechaCreacionHasta |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | folio              | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | folio              | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | materia            | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | materia            | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | tipoDocumento      |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | tipoDocumento      |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | pageNumber         |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |

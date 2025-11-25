@@ -90,8 +90,7 @@ const baseUsuarioEntidad = {
   "cargo": "string",
   "entidad": {
     "nombre": "string",
-    "id": "number",
-    "entidadCodificadorId": "number"
+    "id": "number"
   },
   "nombreCompleto": "string",
   "roles": ["string"],
@@ -150,7 +149,7 @@ export const successStructures = {
     "page": "number"
   },
 
-  "JSON_RESPONSE_PENDIENTES_RECEPCION_SIN_DATOS": {
+   "JSON_RESPONSE_RESULT_SIN_DATOS": {
     ...baseResponse,
     "result": [],
     "total_count": "number",
@@ -331,5 +330,13 @@ export const successStructures = {
     "total_count": "number",
     "total_pages": "number",
     "page": "number"
-  }
+  },
+
+  "JSON_RESPONSE_USUARIOS_ENTIDAD": {
+  ...baseResponse,
+  "result": [baseUsuarioEntidad],
+  "total_count": "number",
+  "total_pages": "number",
+  "page": "number"
+}
 };
