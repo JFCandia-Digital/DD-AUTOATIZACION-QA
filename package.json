@@ -14,6 +14,8 @@
     "pendientesRecepcion": "npx cucumber-js --profile api --tags @PendientesRecepcion",
     "acuseRecibo": "npx cucumber-js --profile api --tags @AcuseRecibo",
     "buscarSalientes": "npx cucumber-js --profile api --tags @BuscarSalientes",
+    "buscarEntrantes": "npx cucumber-js --profile api --tags @BuscarEntrantes",
+    "usuarios": "npx cucumber-js --profile api --tags @Usuarios",
     "post_despachar": "npx cucumber-js --profile api --tags @Despachar",
     "entidades": "npx cucumber-js --profile api --tags @Entidades",
     "tipos": "npx cucumber-js --profile api --tags @Tipos",
