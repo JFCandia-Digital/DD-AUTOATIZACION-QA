@@ -42,13 +42,18 @@ Then('el cuerpo de la respuesta debe tener la propiedad {string} con el valor {}
 });
 
 Then('el cuerpo de la respuesta debe tener la estructura de éxito {string}', function (this: any, structureName: string) {
-  const expectedStructure = successStructures[structureName];
-  if (!expectedStructure) {
-    throw new Error(`La estructura de éxito llamada '${structureName}' no está definida en src/api-test/data/schemas.ts`);
+  try {
+    const expectedStructure = successStructures[structureName];
+    if (!expectedStructure) {
+      throw new Error(`La estructura de éxito llamada '${structureName}' no está definida en src/api-test/data/schemas.ts`);
+    }
+    attachJsonToReport(this, expectedStructure, `ExpectedSchema_SUCCESS_${structureName}.json`);
+    const actualResponse = apiContext.response.data;
+
+    validateStructure(actualResponse, expectedStructure, '');
+  } catch (error) {
+    throw new Error(`Response body: ${JSON.stringify(apiContext.response.data, null, 2)}`);
   }
-  attachJsonToReport(this, expectedStructure, `ExpectedSchema_SUCCESS_${structureName}.json`);
-  const actualResponse = apiContext.response.data;
-  validateStructure(actualResponse, expectedStructure, '');
 });
 
 Then('el cuerpo de la respuesta debe tener la estructura de error {string}', function (this: any, structureName: string) {
@@ -61,9 +66,7 @@ Then('el cuerpo de la respuesta debe tener la estructura de error {string}', fun
     const actualResponse = apiContext.response.data;
     validateStructure(actualResponse, expectedStructure, '');
   } catch (error) {
-    throw new Error(`
-    Response body: ${JSON.stringify(apiContext.response.data, null, 2)}
-  `);
+    throw new Error(`Response body: ${JSON.stringify(apiContext.response.data, null, 2)}`);
 
   }
 
@@ -99,7 +102,7 @@ Then('la propiedad {string} del cuerpo de la respuesta debe ser una fecha y hora
 Then('guardo el valor de la propiedad {string} como {string} en el contexto', function (this: any, path: string, key: string) {
 
   const value = _.get(apiContext.response.data, path);
-  
+
   if (value === undefined) {
     throw new Error(`No se pudo encontrar la propiedad '${path}' en la respuesta anterior.`);
   }

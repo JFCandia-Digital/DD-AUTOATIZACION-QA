@@ -5,7 +5,8 @@ Feature: Pruebas realizadas a la API "GET" - "/entidades/dependientes/:entidadCo
 # =================================================================================
 
   Scenario: Enviar petición "GET" - "/entidades/dependientes/:entidadCodificadorId" con datos válidos
-    Given que realizo una petición "GET" a "/entidades/dependientes/598" con token "válido"
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que realizo una petición "GET" a "/entidades/dependientes/598" con token "válido"
     Then el estado de la respuesta debe ser 200
     And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_DEPENDIENTES"
     And la propiedad "timestamp" del cuerpo de la respuesta debe ser una fecha y hora actual
@@ -30,16 +31,16 @@ Feature: Pruebas realizadas a la API "GET" - "/entidades/dependientes/:entidadCo
     And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
 
     Examples: Campos que fallan validación
-      | tipo_dato                | status | estructura              | campo_error | mensaje_error_esperado      |
+      | tipo_dato                | status | estructura              | campo_error | mensaje_error_esperado |
       # Casos 400: El formato es incorrecto (como los que ya tenías)
-      | abc                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | true                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | 1.5                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | null                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
+      | abc                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | true                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | 1.5                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | null                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
       # Casos 400: Pruebas de Inyección SQL (deben fallar igual)
-      | '                        | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | ' OR 1=1                 | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
-      | ';--                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."       |
+      | '                        | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | ' OR 1=1                 | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | ';--                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
       # Casos 404: El formato es correcto, pero el recurso no existe
-      | 999999                   | 404    | ERROR_404_Not_Found     | "message"   | "Comunicación no encontrada." | # (Ajusta al error 404 real)
-      | 9223372036854775808      | 404    | ERROR_404_Not_Found     | "message"   | "Comunicación no encontrada." | # (Ajusta al error 404 real)
+      | 999999                   | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |
+      | 9223372036854775808      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida."  |

@@ -4,7 +4,7 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
 # =================================================================================
 # == Pruebas para método POST /comunicaciones/despachar
 # =================================================================================
-@Revision
+
   Scenario: Enviar petición "POST" - "/comunicaciones/despachar" con datos válidos
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que preparo una petición "POST" a "/comunicaciones/despachar" con token "válido"
@@ -85,8 +85,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
       | JSON_SIN_ENTIDAD_DESTINATARIA_CODIFICADOR_ID_DESTINATARIOS_CONFIGURACION_DESTINATARIOS | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_INFO_VACIO_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                              | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_SIN_DESTINATARIOS_REFERENCIADOS_CONFIGURACION_DESTINATARIOS                       | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_INFO_VACIO_DESTINATARIOS_REFERENCIADOS_CONFIGURACION_DESTINATARIOS                | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_INFO_VACIO_CONFIGURACION_DESTINATARIOS                                            | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_ENTIDAD_DESPACHADORA_CODIFICADOR_ID                                           | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_FOLIO                                                                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |

@@ -36,6 +36,18 @@ export function getCredential(credential: string): string {
       return process.env.CLIENT_ID_CARABINEROS!;
     case 'CLIENT_SECRET_CARABINEROS':
       return process.env.CLIENT_SECRET_CARABINEROS!;
+    
+      // --- Credenciales SEGEPRES ---
+    case 'CLIENT_ID_SEGEPRES':
+      return process.env.CLIENT_ID_SEGEPRES!;
+    case 'CLIENT_SECRET_SEGEPRES':
+      return process.env.CLIENT_SECRET_SEGEPRES!;
+
+      // --- Credenciales CNE ---
+    case 'CLIENT_ID_CNE':
+      return process.env.CLIENT_ID_CNE!;
+    case 'CLIENT_SECRET_CNE':
+      return process.env.CLIENT_SECRET_CNE!;
 
     default:
       return credential;
@@ -53,21 +65,36 @@ export function validateStructure(actual: any, expected: any, path: string) {
 
   if (Array.isArray(expected)) {
     expect(Array.isArray(actual), `La propiedad '${path}' debería ser un array.`).toBe(true);
+    
+    if (actual.length === 0) return;
     const expectedNode = expected[0];
-    // Validamos la estructura de cada elemento en el array real
     for (let i = 0; i < actual.length; i++) {
       validateStructure(actual[i], expectedNode, `${path}[${i}]`);
     }
     return;
   }
 
-
   if (typeof expected === 'object' && expected !== null) {
     for (const key in expected) {
-      const currentPath = path ? `${path}.${key}` : key;
-      expect(actual, `Al objeto en la ruta '${path}' le falta la propiedad '${key}'.`).toHaveProperty(key);
+
+      let isOptional = false;
+      let actualKey = key;
+
+      if (key.endsWith('?')) {
+        isOptional = true;
+        actualKey = key.slice(0, -1);
+      }
+
+      const currentPath = path ? `${path}.${actualKey}` : actualKey;
+
+      if (isOptional && !Object.prototype.hasOwnProperty.call(actual, actualKey)) {
+        continue;
+      }
+
+      expect(actual, `Al objeto en la ruta '${path}' le falta la propiedad '${actualKey}'.`).toHaveProperty(actualKey);
+      
       const expectedValue = expected[key];
-      const actualValue = actual[key];
+      const actualValue = actual[actualKey];
       validateStructure(actualValue, expectedValue, currentPath);
     }
     return;

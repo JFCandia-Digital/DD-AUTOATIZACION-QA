@@ -1,8 +1,22 @@
-import { When } from "@cucumber/cucumber";
+import { Given, When } from "@cucumber/cucumber";
 import { apiContext } from "../../../common/support/apiContext";
 import { sendPutRequest } from "../../../common/support/apiClient";
 import { attachJsonToReport, attachReport, guardarResumenDeTareas } from "../../../common/utils/utils";
 import _ from "lodash";
+
+Given('que ejecuto una petición "PUT" a {string} con token {string}', async function (this: any, endpoint: string, authType: string) {
+  const defaultBody = {
+    isRechazada: false,
+    comentarios: "Prueba de seguridad automática"
+  };
+
+  // Usamos la función ya existente en tu apiClient
+  await sendPutRequest(endpoint, authType, defaultBody);
+
+  // Adjuntamos el reporte (request y token)
+  attachReport(this, 'request');
+  attachReport(this, 'token', authType);
+});
 
 /**
  *
@@ -13,7 +27,7 @@ import _ from "lodash";
  * @param {string} isRechazada - "aceptado" (false) o "rechazado" (true)
  */
 When('que {string} las tareas guardadas en {string} con el comentario {string}', async function (this: any, accion: string, key: string, comentario: string) {
-  
+
   let isRechazada: boolean;
   if (accion.toLowerCase() === 'acepto') {
     isRechazada = false;
@@ -33,7 +47,7 @@ When('que {string} las tareas guardadas en {string} con el comentario {string}',
   if (!Array.isArray(tareas)) {
     throw new Error(`No se encontró un array en el contexto con la clave: ${key}`);
   }
-  
+
   if (tareas.length === 0) {
     console.log(`Advertencia: La lista de tareas '${key}' está vacía. No se ejecutará ningún Acuse de Recibo.`);
     return;
@@ -43,7 +57,7 @@ When('que {string} las tareas guardadas en {string} con el comentario {string}',
 
   for (const tarea of tareas) {
     const comId = tarea.comunicacionId;
-    const tareaId = tarea.tareaId; 
+    const tareaId = tarea.tareaId;
 
     if (!comId || !tareaId) {
       console.error("Tarea omitida por falta de IDs:", tarea);
@@ -76,14 +90,14 @@ When('que {string} las tareas guardadas en {string} con el comentario {string}',
  *
  * @param {string} key - La clave en 'worldData' donde está guardado el array (ej. "listaArmada")
  */
-When('que proceso las tareas guardadas en {string}', { timeout: 120 * 1000 }, async function (this: any, key: string) {
-  
+When('que proceso las tareas guardadas en {string} en el metodo PUT {string}', { timeout: 120 * 1000 }, async function (this: any, key: string, urlTemplate: string) {
+
   const tareas = apiContext.worldData.get(key);
 
   if (!Array.isArray(tareas)) {
     throw new Error(`No se encontró un array en el contexto con la clave: ${key}`);
   }
-  
+
   if (tareas.length === 0) {
     console.log(`Advertencia: La lista de tareas '${key}' está vacía. No se procesará nada.`);
     return;
@@ -106,7 +120,7 @@ When('que proceso las tareas guardadas en {string}', { timeout: 120 * 1000 }, as
     let isRechazada: boolean;
     let comentarios: string;
 
-    if (Math.random() < 0.5) { 
+    if (Math.random() < 0.5) {
       isRechazada = true;
       comentarios = `Rechazado ALEATORIAMENTE por Test Automatizado (Materia: ${materia})`;
     } else {
@@ -117,7 +131,7 @@ When('que proceso las tareas guardadas en {string}', { timeout: 120 * 1000 }, as
 
     const requestBody = { isRechazada, comentarios };
     const endpoint = `/comunicaciones/${comId}/recepcion/${tareaId}/acuse-recibo`;
-    
+
     console.log(`  -> Procesando Tarea ${tareaId} como: ${isRechazada ? 'RECHAZADA' : 'ACEPTADA'}`);
     await sendPutRequest(endpoint, "válido", requestBody);
 
@@ -143,6 +157,6 @@ When('que proceso las tareas guardadas en {string}', { timeout: 120 * 1000 }, as
   const reporteFinalFileName = `reporte_acuse-recibo_${key}.json`;
   guardarResumenDeTareas(resultadosProcesamiento, reporteFinalFileName);
   attachJsonToReport(this, resultadosProcesamiento, reporteFinalFileName);
-  
+
   console.log(`Bucle de procesamiento completado. Reporte final guardado en: ${reporteFinalFileName}`);
 });

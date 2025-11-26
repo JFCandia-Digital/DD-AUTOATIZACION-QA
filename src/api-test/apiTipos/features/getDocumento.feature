@@ -1,11 +1,12 @@
-@API @Tipos @GetTipoDocumento
+@API @Tipos @GetTipoDocumento @Revision
 Feature: Pruebas realizadas a la API "GET" - "/tipo/documento"
 # =================================================================================
 # == Pruebas para método GET /tipo/documento
 # =================================================================================
 
   Scenario: Enviar petición "GET" - "/tipo/documento" con datos válidos
-    Given que realizo una petición "GET" a "/tipo/documento" con token "válido"
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que realizo una petición "GET" a "/tipo/documento" con token "válido"
     Then el estado de la respuesta debe ser 200
     And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_TIPO_DOCUMENTO"
     And la propiedad "timestamp" del cuerpo de la respuesta debe ser una fecha y hora actual
@@ -21,4 +22,3 @@ Feature: Pruebas realizadas a la API "GET" - "/tipo/documento"
       | inválido  |    401 | ERROR_401_Unauthorized | "No autorizado."   |
       | nulo      |    401 | ERROR_401_Unauthorized | "No autorizado."   |
       | expirado  |    401 | ERROR_401_Unauthorized | "Sesión expirada." |
-

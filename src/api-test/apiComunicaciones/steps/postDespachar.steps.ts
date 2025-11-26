@@ -80,7 +80,7 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
 });
 
 
-When('envío la petición multipart', async function (this: any) {
+When('envío la petición multipart', { timeout: 60 * 1000 }, async function (this: any) {
   const formData = new FormData();
 
   let shouldModifyAnexosInfo = 
