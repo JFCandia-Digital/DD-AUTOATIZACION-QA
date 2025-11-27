@@ -38,17 +38,3 @@ Feature: Pruebas realizadas a la API "GET" - "/usuarios/"
       | id    | abc   |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
       | id    | true  |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
       | id    | null  |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-
-      
-    #   | run                       | true                 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | nombre                    |                  1.5 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | entidadCodificadorId      | null                 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | entidadPadreCodificadorId | ' OR 1=1             |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | roles                     |  9223372036854775808 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | pageSize                  | true                 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | pageNumber                | abc                  |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | tipoDocumento             |                  1.5 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | tipoDocumento             | null                 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | tipoDocumento             | ' OR 1=1             |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | tipoDocumento             |  9223372036854775808 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |
-    #   | tipoDocumento             | -9223372036854775808 |    400 | ERROR_400_Bad_Request_con_errorCause | "message"   | "Petición no válida."  |

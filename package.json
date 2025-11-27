@@ -18,6 +18,7 @@
     "usuarios": "npx cucumber-js --profile api --tags @Usuarios",
     "post_despachar": "npx cucumber-js --profile api --tags @Despachar",
     "entidades": "npx cucumber-js --profile api --tags @Entidades",
+    "getTiposProcedimientoAdministrativo": "npx cucumber-js --profile api --tags @GetTiposProcedimientoAdministrativo",
     "tipos": "npx cucumber-js --profile api --tags @Tipos",
     "revision": "npx cucumber-js --profile api --tags @Revision",
     "api-report": "node src/reports/api/report-generator.js",

@@ -32,15 +32,12 @@ Feature: Pruebas realizadas a la API "GET" - "/entidades/padre-familia/:entidadC
 
     Examples: Campos que fallan validación
       | tipo_dato                | status | estructura              | campo_error | mensaje_error_esperado|
-      # Casos 400: El formato es incorrecto (como los que ya tenías)..
       | abc                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | true                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | 1.5                      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | null                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
-      # Casos 400: Pruebas de Inyección SQL (deben fallar igual)..
       | '                        | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | ' OR 1=1                 | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | ';--                     | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
-      # Casos 404: El formato es correcto, pero el recurso no existe
       | 999999                   | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
       | 9223372036854775808      | 400    | ERROR_400_Bad_Request   | "message"   | "Petición no válida." |
