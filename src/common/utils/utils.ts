@@ -66,19 +66,17 @@ export function validateStructure(actual: any, expected: any, path: string) {
   if (Array.isArray(expected)) {
     expect(Array.isArray(actual), `La propiedad '${path}' debería ser un array.`).toBe(true);
     
-
-    if (actual.length > 0 && expected.length > 0) {
-      const expectedNode = expected[0];
-
-      for (let i = 0; i < actual.length; i++) {
-        validateStructure(actual[i], expectedNode, `${path}[${i}]`);
-      }
+    if (actual.length === 0) return;
+    const expectedNode = expected[0];
+    for (let i = 0; i < actual.length; i++) {
+      validateStructure(actual[i], expectedNode, `${path}[${i}]`);
     }
     return;
   }
 
   if (typeof expected === 'object' && expected !== null) {
     for (const key in expected) {
+
       let isOptional = false;
       let actualKey = key;
 
@@ -88,6 +86,7 @@ export function validateStructure(actual: any, expected: any, path: string) {
       }
 
       const currentPath = path ? `${path}.${actualKey}` : actualKey;
+
       if (isOptional && !Object.prototype.hasOwnProperty.call(actual, actualKey)) {
         continue;
       }
@@ -96,7 +95,6 @@ export function validateStructure(actual: any, expected: any, path: string) {
       
       const expectedValue = expected[key];
       const actualValue = actual[actualKey];
-
       validateStructure(actualValue, expectedValue, currentPath);
     }
     return;
