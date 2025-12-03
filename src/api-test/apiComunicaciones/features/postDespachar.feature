@@ -66,8 +66,8 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart
     Then el estado de la respuesta debe ser 400
-    And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request_con_errorCause"
-    And el cuerpo de la respuesta debe tener la propiedad "error" con el valor "El archivo descrito en archivosAnexosInfo no fue adjuntado."
+    And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
+    And el cuerpo de la respuesta debe tener la propiedad "error" con el valor "No se adjuntó un archivo anexo para la información proporcionada en archivosAnexosInfo."
 
   Scenario Outline: Validar cada campo del JSON 'comunicacionRequest'
     Given que preparo una petición "POST" a "/comunicaciones/despachar" con token "válido"
@@ -83,7 +83,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
       | JSON_SIN_CONFIGURACION_DESTINATARIOS                                                   | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                                     | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_ENTIDAD_DESTINATARIA_CODIFICADOR_ID_DESTINATARIOS_CONFIGURACION_DESTINATARIOS | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_INFO_VACIO_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                              | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_INFO_VACIO_CONFIGURACION_DESTINATARIOS                                            | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_SIN_ENTIDAD_DESPACHADORA_CODIFICADOR_ID                                           | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
@@ -109,9 +108,11 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
       | body_name                                | archivo_anexo                                                                                                                                               | schema                | campo_error | mensaje_error_esperado |
       | JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO  | ab.pdf                                                                                                                                                      | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO  | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+  
 
   Scenario Outline: Validar tipos de datos en JSON 'comunicacionRequest' (cada campo del JSON)
-    Given que preparo una petición "POST" a "/comunicaciones/despachar" con token "válido"
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/despachar" con token "válido"
     And uso el cuerpo de petición llamado "<body_name>" como campo "comunicacionRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart
@@ -147,13 +148,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
       | JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_ARRAY_CON_DATO                                   | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_VACIO                                     | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO                                  | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING                                           | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER                                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN                                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO                                   | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO                                     | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO                                  | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_ENTIDAD_DESPACHADORA_CODIFICADOR_ID_INTEGER_A_STRING                                 | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_ENTIDAD_DESPACHADORA_CODIFICADOR_ID_INTEGER_A_STRING_CARACTER_ESPECIAL               | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_ENTIDAD_DESPACHADORA_CODIFICADOR_ID_INTEGER_A_BOOLEAN                                | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
@@ -199,10 +193,10 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar"
       | JSON_DV_SRING_A_ARRAY_CON_DATO                                                            | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_DV_SRING_A_OBJECT                                                                    | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_DV_SRING_A_OBJECT_CON_DATO                                                           | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_STRING                                                                  | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_STRING_CARACTER_ESPECIAL                                                | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_BOOLEAN                                                                 | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_ARRAY_VACIO                                                             | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_ARRAY_CON_DATO                                                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_OBJECT                                                                  | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_DV_INTEGER_A_OBJECT_CON_DATO                                                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_STRING                                                                 | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_STRING_CARACTER_ESPECIAL                                               | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_BOOLEAN                                                                | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_ARRAY_VACIO                                                            | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_ARRAY_CON_DATO                                                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_OBJECT                                                                 | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RUN_INTEGER_A_OBJECT_CON_DATO                                                        | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |

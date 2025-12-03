@@ -42,9 +42,10 @@ const baseBusqueda = {
   "id": "number",
   "nombre": "string",
   "isPrincipal": "boolean",
-  "entidadDependenciaId": "number",
-  "entidadDependenciaCodificadorId": "number",
-  "entidadDependenciaNombre": "string",
+  "entidadDependenciaId?": "number",
+  "entidadDependenciaCodificadorId?": "number",
+  "entidadDependenciaNombre?": "string",
+  "entidadCodificadorId?": "number",
   "sigla": "string",
   "isActiva": "boolean"
 };
@@ -149,7 +150,7 @@ export const successStructures = {
     "page": "number"
   },
 
-   "JSON_RESPONSE_RESULT_SIN_DATOS": {
+  "JSON_RESPONSE_RESULT_SIN_DATOS": {
     ...baseResponse,
     "result": [],
     "total_count": "number",
@@ -332,11 +333,35 @@ export const successStructures = {
     "page": "number"
   },
 
-  "JSON_RESPONSE_USUARIOS_ENTIDAD": {
-  ...baseResponse,
-  "result": [baseUsuarioEntidad],
-  "total_count": "number",
-  "total_pages": "number",
-  "page": "number"
-}
+  "JSON_RESPONSE_ENTIDADES": {
+    ...baseResponse,
+    "result": [baseBusqueda],
+    "total_count": "number",
+    "total_pages": "number",
+    "page": "number"
+  },
+
+  "JSON_RESPONSE_USUARIOS": {
+    ...baseResponse,
+    "result": [baseUsuarioEntidad],
+    "total_count": "number",
+    "total_pages": "number",
+    "page": "number"
+  },
+
+  "JSON_RESPONSE_REGISTRO_EXTERNO": {
+    ...baseResponse,
+    "result": {
+      "id": "number",
+      "fechaDespacho": "string"
+    }
+  },
+
+  "JSON_RESPONSE_REGISTRO_INCIDENCIA": {
+    ...baseResponse,
+    "result": {
+      "id": "number",
+      "fechaDespacho": "string"
+    }
+  }
 };

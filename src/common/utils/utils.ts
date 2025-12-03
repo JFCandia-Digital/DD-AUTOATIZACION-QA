@@ -18,7 +18,7 @@ export function getCredential(credential: string): string {
       return process.env.CLIENT_ID_PDI!;
     case 'CLIENT_SECRET_PDI':
       return process.env.CLIENT_SECRET_PDI!;
-    
+
     // --- Credenciales ARMADA ---
     case 'CLIENT_ID_ARMADA':
       return process.env.CLIENT_ID_ARMADA!;
@@ -36,14 +36,14 @@ export function getCredential(credential: string): string {
       return process.env.CLIENT_ID_CARABINEROS!;
     case 'CLIENT_SECRET_CARABINEROS':
       return process.env.CLIENT_SECRET_CARABINEROS!;
-    
-      // --- Credenciales SEGEPRES ---
+
+    // --- Credenciales SEGEPRES ---
     case 'CLIENT_ID_SEGEPRES':
       return process.env.CLIENT_ID_SEGEPRES!;
     case 'CLIENT_SECRET_SEGEPRES':
       return process.env.CLIENT_SECRET_SEGEPRES!;
 
-      // --- Credenciales CNE ---
+    // --- Credenciales CNE ---
     case 'CLIENT_ID_CNE':
       return process.env.CLIENT_ID_CNE!;
     case 'CLIENT_SECRET_CNE':
@@ -65,21 +65,36 @@ export function validateStructure(actual: any, expected: any, path: string) {
 
   if (Array.isArray(expected)) {
     expect(Array.isArray(actual), `La propiedad '${path}' debería ser un array.`).toBe(true);
+
+    if (actual.length === 0) return;
     const expectedNode = expected[0];
-    // Validamos la estructura de cada elemento en el array real
     for (let i = 0; i < actual.length; i++) {
       validateStructure(actual[i], expectedNode, `${path}[${i}]`);
     }
     return;
   }
 
-
   if (typeof expected === 'object' && expected !== null) {
     for (const key in expected) {
-      const currentPath = path ? `${path}.${key}` : key;
-      expect(actual, `Al objeto en la ruta '${path}' le falta la propiedad '${key}'.`).toHaveProperty(key);
+
+      let isOptional = false;
+      let actualKey = key;
+
+      if (key.endsWith('?')) {
+        isOptional = true;
+        actualKey = key.slice(0, -1);
+      }
+
+      const currentPath = path ? `${path}.${actualKey}` : actualKey;
+
+      if (isOptional && !Object.prototype.hasOwnProperty.call(actual, actualKey)) {
+        continue;
+      }
+
+      expect(actual, `Al objeto en la ruta '${path}' le falta la propiedad '${actualKey}'.`).toHaveProperty(actualKey);
+
       const expectedValue = expected[key];
-      const actualValue = actual[key];
+      const actualValue = actual[actualKey];
       validateStructure(actualValue, expectedValue, currentPath);
     }
     return;
@@ -166,61 +181,97 @@ export function attachReport(worldContext: any, part: 'request' | 'status' | 're
   }
 }
 
+// recibe el objeto contenedor y la clave/índice
+type AccionTransformacion = (contenedor: any, clave: string | number) => void;
+
 /**
- * Crea una copia profunda del objeto base y elimina un campo específico identificado por su ruta
- * @param {Object} objetoBase - Objeto original del cual se creará una copia sin el campo especificado
- * @param {string} rutaCampo - Ruta del campo a eliminar en formato 'propiedad.subpropiedad' (notación de punto)
- * @returns {Object} Nueva instancia del objeto sin el campo especificado, manteniendo inalterado el objeto original
- * 
- * @example
- * // Eliminar campo a nivel raíz
- * const sinFolio = crearVarianteSinCampo(COMUNICACION_DESPACHAR_BASE, 'folio');
- * 
- * @example
- * // Eliminar campo en objeto anidado
- * const sinDv = crearVarianteSinCampo(COMUNICACION_DESPACHAR_BASE, 'usuarioSolicitante.dv');
- * 
- * @example
- * // Eliminar campo en array de objetos (usando índice)
- * const sinIsEnCopia = crearVarianteSinCampo(COMUNICACION_DESPACHAR_BASE, 'configuracionDestinatarios.destinatarios.0.isEnCopia');
- * 
- * @throws {Error} Si el objetoBase no es un objeto válido
- * 
- * @note Utiliza lodash.cloneDeep para crear una copia profunda que evita mutaciones del objeto original
- * @note Si la ruta no existe, retorna el objeto clonado sin modificaciones
- * @note Para eliminar elementos de arrays, usar notación de índice (ej: 'array.0.propiedad')
+ * MOTOR GENÉRICO DE NAVEGACIÓN
+ * Recorre un objeto siguiendo una ruta y ejecuta una acción en el destino.
+ * Soporta el comodín '*' para aplicar la acción a todos los elementos de un array.
+ * * @param objetoBase Objeto original.
+ * @param rutaCampo Ruta (ej: 'padre.hijo', 'lista.*.id').
+ * @param accion Callback que define qué hacer al llegar al campo (borrar, null, etc).
  */
-export function crearVarianteSinCampo(objetoBase: object, rutaCampo: string): object {
-    if (!objetoBase || typeof objetoBase !== 'object') {
-        throw new Error('El objetoBase debe ser un objeto válido');
-    }
-    if (!rutaCampo || typeof rutaCampo !== 'string') {
-        throw new Error('La rutaCampo debe ser una cadena de texto válida');
-    }
+export function aplicarTransformacion(objetoBase: object, rutaCampo: string, accion: AccionTransformacion): object {
+    if (!objetoBase || typeof objetoBase !== 'object') throw new Error('El objetoBase debe ser un objeto válido');
+    if (!rutaCampo || typeof rutaCampo !== 'string') throw new Error('La rutaCampo debe ser una cadena de texto válida');
+    
     const variante = _.cloneDeep(objetoBase);
-
     const partes = rutaCampo.split('.');
-    let objetoActual = variante;
-    
-    for (let i = 0; i < partes.length - 1; i++) {
-        const parte = partes[i];
-        if (!objetoActual || !objetoActual.hasOwnProperty(parte)) {
-            console.warn(`Advertencia: La ruta '${rutaCampo}' no existe completamente en el objeto. Parte faltante: '${parte}'`);
-            return variante;
+
+    function navegar(obj: any, indiceParte: number) {
+        if (!obj) return;
+
+        const parteActual = partes[indiceParte];
+        const esUltimaParte = indiceParte === partes.length - 1;
+
+        if (parteActual === '*') {
+            if (Array.isArray(obj)) {
+                obj.forEach(item => navegar(item, indiceParte + 1));
+            } else {
+                console.warn(`Advertencia: Se usó '*' en la ruta '${rutaCampo}' pero el valor encontrado no es un array.`);
+            }
+            return;
         }
-        
-        objetoActual = objetoActual[parte];
+
+        if (esUltimaParte) {
+            if (obj.hasOwnProperty(parteActual)) {
+               accion(obj, parteActual);
+            } else {
+                console.warn(`Advertencia: El campo '${parteActual}' no existe en la ruta especificada.`);
+            }
+            return;
+        }
+
+        if (obj.hasOwnProperty(parteActual)) {
+            navegar(obj[parteActual], indiceParte + 1);
+        }
     }
 
-    const campoFinal = partes[partes.length - 1];
-    if (objetoActual && objetoActual.hasOwnProperty(campoFinal)) {
-        delete objetoActual[campoFinal];
-    } else {
-        console.warn(`Advertencia: El campo '${campoFinal}' no existe en la ruta especificada`);
-    }
-    
+    navegar(variante, 0);
     return variante;
 }
+
+/**
+ * Crea una copia profunda del objeto y ELIMINA el campo especificado.
+ * Soporta 'ruta.array.*.campo' para borrar en masa.
+ */
+export function crearVarianteSinCampo(objetoBase: object, rutaCampo: string): object {
+    const estrategiaEliminar: AccionTransformacion = (obj, clave) => {
+        if (Array.isArray(obj) && !isNaN(Number(clave))) {
+             delete obj[clave as any]; 
+        } else {
+            delete obj[clave as any];
+        }
+    };
+
+    return aplicarTransformacion(objetoBase, rutaCampo, estrategiaEliminar);
+}
+
+/**
+ * Crea una copia profunda del objeto y MODIFICA el valor en la ruta especificada.
+ * Soporta 'ruta.array.*.campo' para modificar en masa todos los items de un array.
+ * * @param objetoBase El objeto original.
+ * @param rutaCampo La ruta (ej: 'config.destinatarios.0.id' o 'config.destinatarios.*.id').
+ * @param nuevoValor El valor que quieres asignar.
+ */
+export function crearVarianteValor(objetoBase: object, rutaCampo: string, nuevoValor: any): object {
+    // Definimos la estrategia: "Asignar Valor"
+    const estrategiaAsignar: AccionTransformacion = (obj, clave) => {
+        obj[clave] = nuevoValor;
+    };
+
+    return aplicarTransformacion(objetoBase, rutaCampo, estrategiaAsignar);
+}
+
+/**
+ * Helper para variantes de archivos anexos
+ */
+export const crearVarianteArchivo = (base: object, fileName: string) => ({
+  ...base,
+  "archivosAnexosInfo": [{ "fileName": fileName, "isReservado": false }]
+});
+
 
 /**
  * Guarda CUALQUIER dato en un archivo JSON en el directorio de históricos.
@@ -234,7 +285,7 @@ export function guardarResumenDeTareas(data: any, fileName: string) {
     console.log(`Advertencia: No se guardó '${fileName}' (datos nulos o vacíos).`);
     return;
   }
-  
+
   try {
     const outputDir = PATHS.JSON_HISTORICS_DIRECTORY;
     const filePath = path.join(outputDir, fileName);
@@ -242,10 +293,75 @@ export function guardarResumenDeTareas(data: any, fileName: string) {
     fs.mkdirSync(outputDir, { recursive: true });
 
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    
+
     console.log(`Reporte JSON guardado en: ${filePath}`);
 
   } catch (error) {
     console.error(`Error al guardar el resumen JSON '${fileName}':`, error);
+  }
+}
+
+/**
+ * Retorna la fecha y hora actual formateada como "dd-MM-yyyy HH:mm:ss".
+ * Útil para campos de fecha en Registro Externo u otros endpoints que requieran este formato específico.
+ */
+export function obtenerFechaActualFormateada(): string {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+  const year = now.getFullYear();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+}
+
+/**
+ * Intenta parsear una respuesta Multipart/Mixed para extraer la parte JSON (metadatos).
+ * Si el contenido no cumple el contrato o el JSON es inválido, lanza un error.
+ * * @param worldContext El contexto 'this' de Cucumber para adjuntar reportes.
+ * @param contentType El header Content-Type recibido.
+ */
+export function procesarMultipartEstricto(worldContext: any, contentType: string) {
+  const boundaryMatch = contentType.match(/boundary=(.+)/);
+  if (!boundaryMatch) {
+    throw new Error("El header Content-Type es multipart/mixed pero no incluye el parámetro 'boundary'.");
+  }
+
+  let boundary = boundaryMatch[1];
+  boundary = boundary.replace(/["';]/g, ''); 
+
+  const responseBody = apiContext.response.data;
+  const bodyString = typeof responseBody === 'string' ? responseBody : String(responseBody);
+  const partes = bodyString.split(`--${boundary}`);
+  const parteJson = partes.find((p: string) => 
+      p.includes('application/json')
+  );
+
+  if (!parteJson) {
+
+    throw new Error("Multipart recibido, pero no se encontró una parte con 'Content-Type: application/json'.");
+  }
+
+  const headerIndex = parteJson.indexOf('application/json');
+  const inicioJson = parteJson.indexOf('{', headerIndex);
+  const finJson = parteJson.lastIndexOf('}');
+
+  if (inicioJson !== -1 && finJson !== -1) {
+    let jsonStringLimpio = parteJson.substring(inicioJson, finJson + 1);
+    jsonStringLimpio = jsonStringLimpio.trim();
+
+    try {
+      const metadatos = JSON.parse(jsonStringLimpio);
+      attachJsonToReport(worldContext, metadatos, `Metadatos_Extraidos.json`);
+      console.log("   -> JSON de metadatos parseado correctamente.");
+    } catch (e) {
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      worldContext.attach(jsonStringLimpio, { mediaType: 'text/plain', fileName: 'JSON_INVALIDO_RAW.txt' });
+      throw new Error(`Fallo al parsear JSON. Error: ${errorMsg}. Contenido (primeros 50 chars): ${jsonStringLimpio.substring(0, 50)}...`);
+    }
+  } else {
+      throw new Error("Se encontró la parte 'application/json', pero no contiene un objeto JSON válido delimitado por { }.");
   }
 }

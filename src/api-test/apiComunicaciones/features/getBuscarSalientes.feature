@@ -4,7 +4,7 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/buscar-salientes"
 # == Pruebas para método GET /comunicaciones/buscar-salientes
 # =================================================================================
 
-  @Revision
+  
   Scenario: Enviar petición "GET" - "/comunicaciones/buscar-salientes" con datos válidos
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que realizo una petición "GET" a "/comunicaciones/buscar-salientes" con token "válido"
