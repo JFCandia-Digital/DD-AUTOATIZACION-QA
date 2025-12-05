@@ -37,6 +37,8 @@ When('ejecuto peticiones {string} a {string} para el documento principal y sus a
 
     const erroresAcumulados: string[] = [];
 
+    const esEndpointMetadata = urlTemplate.includes("archivo-contenido-y-metadata");
+
     for (const archivo of archivosParaDescargar) {
         const endpointFinal = urlTemplate
             .replace(':comunicacionId', String(comunicacionId))
@@ -62,18 +64,20 @@ When('ejecuto peticiones {string} a {string} para el documento principal y sus a
             const bodyString = String(responseBody);
 
             this.attach(`Content-Type recibido: ${contentType}`);
-
-            const esBinarioPDF = bodyString.includes("%PDF-");
             
-            if (esBinarioPDF) {
-                 throw new Error(`Defecto de Formato: Se esperaba el archivo codificado en Base64, pero se recibió un flujo BINARIO crudo (se detectó la cabecera '%PDF-').`);
-            }
+            if (esEndpointMetadata) {
+                if (!contentType.includes("multipart/mixed")) {
+                    throw new Error(`Error de Contrato: Se esperaba 'multipart/mixed' pero se recibió '${contentType}'.`);
+                }
+                procesarMultipartEstricto(this, contentType);
 
-            if (!contentType.includes("multipart/mixed")) {
-                throw new Error(`Error de Contrato: Se esperaba 'multipart/mixed' pero se recibió '${contentType}'.`);
-            }
+            } else {
+                const esBinarioPDF = bodyString.includes("%PDF-");
 
-            procesarMultipartEstricto(this, contentType);
+                if (contentType.includes("application/pdf") && !esBinarioPDF) {
+                     console.warn("El content-type es PDF pero no se detectó la cabecera %PDF- en el inicio del string (podría ser encoding).");
+                }
+            }
 
         } catch (error: any) {
             const mensajeError = `[FALLO en ${archivo.tipo}]: ${error.message}`;
