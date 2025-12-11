@@ -4,7 +4,6 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/buscar-salientes"
 # == Pruebas para método GET /comunicaciones/buscar-salientes
 # =================================================================================
 
-  
   Scenario: Enviar petición "GET" - "/comunicaciones/buscar-salientes" con datos válidos
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que realizo una petición "GET" a "/comunicaciones/buscar-salientes" con token "válido"
@@ -103,61 +102,61 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/buscar-salientes"
 
     Examples:
       | campo                            | valor                | status | estructura                     | campo_error | mensaje_error_esperado |
-      | comunicacionId                   |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | comunicacionId                   |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | comunicacionId                   | -9223372036854775808 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | folio                            |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | folio                            | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | folio                            | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | folio                            | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | materia                          | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | materia                          |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | materia                          | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | materia                          | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | tipoDocumento                    |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | tipoDocumento                    |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | pageNumber                       |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId |  9223372036854775808 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | entidadDespachadoraCodificadorId | -9223372036854775809 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               |           2025-01-01 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoDesde               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaDespachoHasta               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionDesde               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | fechaCreacionHasta               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | comunicacionId                   |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | comunicacionId                   |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | comunicacionId                   | -9223372036854775808 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               |           2025-10-05 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | "2025/10/05"         |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               |             10:10:00 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | folio                            |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | folio                            | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | folio                            | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | folio                            | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | materia                          | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | materia                          |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | materia                          | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | materia                          | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | tipoDocumento                    |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | tipoDocumento                    |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | pageNumber                       |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId |              -999999 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId |  9223372036854775808 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | entidadDespachadoraCodificadorId | -9223372036854775809 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               |           2025-01-01 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoDesde               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaDespachoHasta               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionDesde               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               |           2025-11-21 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | abc                  |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | false                |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
+      | fechaCreacionHasta               | ' OR 1=1             |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |

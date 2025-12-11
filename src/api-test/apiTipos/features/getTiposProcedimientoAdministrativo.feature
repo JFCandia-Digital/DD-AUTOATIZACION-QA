@@ -8,7 +8,7 @@ Feature: Pruebas realizadas a la API "GET" - "/tipo/tipos-procedimiento-administ
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que realizo una petición "GET" a "/tipo/tipos-procedimiento-administrativo/<entidadCodificadorId>" con token "válido"
     Then el estado de la respuesta debe ser 200
-    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_DEPENDIENTES"
+    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_TIPOS_PROCEDIMIENTO"
     And la propiedad "timestamp" del cuerpo de la respuesta debe ser una fecha y hora actual
 
     Examples:

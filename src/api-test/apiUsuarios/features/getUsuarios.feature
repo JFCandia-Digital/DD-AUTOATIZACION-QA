@@ -93,7 +93,7 @@ Feature: Pruebas realizadas a la API "GET" - "/usuarios/"
 
     Examples:
       | campo  | valor                | status | estructura                     | campo_error | mensaje_error_esperado |
-      | id     |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | id     |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
       | nombre |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
       | nombre | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
       | nombre | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |

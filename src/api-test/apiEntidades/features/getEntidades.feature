@@ -75,7 +75,7 @@ Feature: Pruebas realizadas a la API "GET" - "/entidades/"
       | campo                           | valor                | status | estructura                     | campo_error | mensaje_error_esperado |
       | entidadCodificadorId            |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
       | entidadDependenciaCodificadorId |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
-      | isActiva                        |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
+      | isActiva                        |                    0 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "message"   | "OK"                   |
       | nombre                          |                  1.5 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
       | nombre                          | true                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
       | nombre                          | null                 |    200 | JSON_RESPONSE_RESULT_SIN_DATOS | "result"    | []                     |
