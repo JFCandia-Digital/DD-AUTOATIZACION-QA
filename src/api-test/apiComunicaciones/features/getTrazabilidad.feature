@@ -30,14 +30,14 @@ Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/:comunicacionId/tr
     And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
 
     Examples: Campos que fallan validación
-      | tipo_dato                | status | estructura                         | campo_error | mensaje_error_esperado        |         
-      | abc                      | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | true                     | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | 1.5                      | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | null                     | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |           
-      | '                        | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | ' OR 1=1                 | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | ';--                     | 400    | ERROR_400_Bad_Request              | "message"   | "Petición no válida."         |
-      | 999999                   | 404    | ERROR_404_Not_Found_con_errorCause | "message"   | "Registro no encontrado."     |
-      | -999999                  | 404    | ERROR_404_Not_Found_con_errorCause | "message"   | "Registro no encontrado."     |
-      | 9223372036854775808      | 404    | ERROR_404_Not_Found_con_errorCause | "message"   | "Comunicación no encontrada." |
+      | tipo_dato           | status | estructura                         | campo_error | mensaje_error_esperado    |
+      | abc                 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | true                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      |                 1.5 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | null                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | '                   |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | ' OR 1=1            |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      | ';--                |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |
+      |              999999 |    404 | ERROR_404_Not_Found_con_errorCause | "message"   | "Registro no encontrado." |
+      |             -999999 |    404 | ERROR_404_Not_Found_con_errorCause | "message"   | "Registro no encontrado." |
+      | 9223372036854775808 |    400 | ERROR_400_Bad_Request              | "message"   | "Petición no válida."     |

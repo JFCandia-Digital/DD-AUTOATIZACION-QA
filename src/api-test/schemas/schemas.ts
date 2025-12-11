@@ -133,6 +133,12 @@ const baseResultComunicacionDespachar = {
   "entidadDespachadoraCodificadorId": "number"
 };
 
+const baseItemCodigoDescripcion = {
+  "codigo": "string",
+  "descripcion": "string",
+  "id": "number"
+};
+
 // Estructuras optimizadas
 export const successStructures = {
   "AUTH_TOKEN_EXITOSO": {
@@ -363,5 +369,10 @@ export const successStructures = {
       "id": "number",
       "fechaDespacho": "string"
     }
-  }
+  },
+
+  "JSON_RESPONSE_TIPOS_PROCEDIMIENTO": {
+    ...baseResponse,
+    "result": [baseItemCodigoDescripcion]
+  },
 };
