@@ -4,10 +4,10 @@ on: [push, workflow_dispatch]
 
 jobs:
   ejecutar-back:
-    uses: digital-gob-cl/QA-workflows/.github/workflows/motor-generic.yml@cert
+    uses: digital-gob-cl/QA-workflows/.github/workflows/motor-generic.yml@main
     with:
-      repo_to_test: 'digital-gob-cl/dd-automatizacion-qa' # Se apunta a sí mismo
-      npm_command: 'test:api' # Script específico de backend (definido en tu package.json)
+      repo_to_test: 'digital-gob-cl/dd-automatizacion-qa'
+      npm_command: 'test:api'
       tags: '@API'
     secrets:
       REPO_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
