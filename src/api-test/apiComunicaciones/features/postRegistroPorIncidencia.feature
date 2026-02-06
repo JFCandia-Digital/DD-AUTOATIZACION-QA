@@ -222,7 +222,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-por-inci
       | body_name                                                               | schema                            | campo     | mensaje_esperado |
       | JSON_RI_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS       | JSON_RESPONSE_REGISTRO_INCIDENCIA | "message" | "OK"             |
       | JSON_RI_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_ARRAY | JSON_RESPONSE_REGISTRO_INCIDENCIA | "message" | "OK"             |
-      
 # =================================================================================
 # == Pruebas de fecha de despacho externo con días anteriores (Registro por Incidencia)
 # =================================================================================
@@ -246,7 +245,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-por-inci
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 200
     And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_REGISTRO_INCIDENCIA"
-
 # =================================================================================
 # == Pruebas de fecha de despacho externo con días posteriores (Registro por Incidencia)
 # =================================================================================
@@ -270,3 +268,40 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-por-inci
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 400
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
+# =================================================================================
+# == Pruebas de fechaHoraRecepcion (Registro por Incidencia)
+# =================================================================================
+
+  @FechaRecepcion
+  Scenario Outline: Validar "POST" - "/comunicaciones/registro-por-incidencia" con fechaHoraRecepcion en diferentes offset de fechas
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-por-incidencia" con token "válido"
+    And uso el cuerpo de registro externo llamado "<requestBody>" como campo "registroComunicacionIncidenciaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser <statusCode>
+    And el cuerpo de la respuesta debe tener la estructura de <resultType> "<resultStructure>"
+
+    Examples: Scenarios con 1 día anterior
+      | offsetFecha | tipoRecepcion | requestBody                                             | statusCode | resultType | resultStructure                   |
+      |      -1 día | IGUAL         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |      -1 día | MAYOR         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |      -1 día | MENOR         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR |        400 | error      | ERROR_400_Bad_Request             |
+
+    Examples: Scenarios con 2 días anteriores
+      | offsetFecha | tipoRecepcion | requestBody                                              | statusCode | resultType | resultStructure                   |
+      |     -2 días | IGUAL         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |     -2 días | MAYOR         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |     -2 días | MENOR         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR |        400 | error      | ERROR_400_Bad_Request             |
+
+    Examples: Scenarios con 1 día posterior (rechazados)
+      | offsetFecha | tipoRecepcion | requestBody                                           | statusCode | resultType | resultStructure       |
+      |      +1 día | IGUAL         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL |        400 | error      | ERROR_400_Bad_Request |
+      |      +1 día | MAYOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR |        400 | error      | ERROR_400_Bad_Request |
+      |      +1 día | MENOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR |        400 | error      | ERROR_400_Bad_Request |
+
+    Examples: Scenarios con 2 días posteriores (rechazados)
+      | offsetFecha | tipoRecepcion | requestBody                                            | statusCode | resultType | resultStructure       |
+      |     +2 días | IGUAL         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL |        400 | error      | ERROR_400_Bad_Request |
+      |     +2 días | MAYOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR |        400 | error      | ERROR_400_Bad_Request |
+      |     +2 días | MENOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR |        400 | error      | ERROR_400_Bad_Request |

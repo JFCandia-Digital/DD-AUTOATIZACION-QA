@@ -28,7 +28,7 @@
     "fechaAnteriorPosteriorRE": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRE",
     "fechaAnteriorPosteriorRI": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRI",
     "revision1": "npx cucumber-js --profile api --tags @Revision1",
-    "revision2": "npx cucumber-js --profile api --tags @Revision2"
+    "revision2": "npx cucumber-js --profile api --tags @FechaRecepcion"
   },
   "keywords": [],
   "author": "",

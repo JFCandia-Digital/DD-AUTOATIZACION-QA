@@ -137,6 +137,160 @@ const JSON_VALIDO_RI_CON_ANEXOS_VACIOS = {
 const JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO_RI = crearVarianteArchivo(JSON_MINIMO_VALIDO_RI, "ab");
 const JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO_RI = crearVarianteArchivo(JSON_MINIMO_VALIDO_RI, "a".repeat(151) + ".pdf");
 
+// --- Variantes con fechaHoraRecepcion (Registro por Incidencia) ---
+const JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+// Variante con fechaHoraRecepcion > fechaHoraDespachoExterno (más reciente)
+const JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+// Variante con fechaHoraRecepcion < fechaHoraDespachoExterno (más antigua)
+const JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+// Combinaciones con offsets específicos y fechaHoraRecepcion
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
 // =============================================================================
 // 4. VARIACIONES INVÁLIDAS (CAMPOS FALTANTES)
 // =============================================================================
@@ -654,6 +808,31 @@ export const registroExternoRequest = {
   // Variantes con fecha de despacho en días posteriores (Registro por Incidencia)
   "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
   "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+
+  // Variantes con fechaHoraRecepcion (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (1 día anterior)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (2 días anteriores)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (1 día posterior)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (2 días posteriores)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR,
 
   // Campos Faltantes (específicos de registro externo)
   "JSON_RE_SIN_CONFIGURACION_DESTINATARIOS": RE_SIN_CONFIGURACION_DESTINATARIOS,
