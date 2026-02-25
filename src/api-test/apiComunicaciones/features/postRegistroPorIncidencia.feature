@@ -325,3 +325,37 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-por-inci
       |     +2 días | IGUAL         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL |        400 | error      | ERROR_400_Bad_Request |
       |     +2 días | MAYOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR |        400 | error      | ERROR_400_Bad_Request |
       |     +2 días | MENOR         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR |        400 | error      | ERROR_400_Bad_Request |
+
+# =================================================================================
+# == Pruebas de fechaHoraRecepcion distintas por destinatario (Registro por Incidencia)
+# =================================================================================
+
+  @FechaRecepcionDistintas
+  Scenario Outline: Validar "POST" - "/comunicaciones/registro-por-incidencia" con fechaHoraRecepcion distintas por destinatario
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-por-incidencia" con token "válido"
+    And uso el cuerpo de registro externo llamado "<requestBody>" como campo "registroComunicacionIncidenciaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser <statusCode>
+    And el cuerpo de la respuesta debe tener la estructura de <resultType> "<resultStructure>"
+
+    Examples: Scenarios con 1 día anterior
+      | offsetFecha | descripcion                                               | requestBody                                                              | statusCode | resultType | resultStructure                   |
+      |      -1 día | distintas válidas (mezcla IGUAL y MAYOR por destinatario) | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS      |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |      -1 día | distintas con inválida (MENOR en un destinatario)         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA |        400 | error      | ERROR_400_Bad_Request             |
+
+    Examples: Scenarios con 2 días anteriores
+      | offsetFecha | descripcion                                               | requestBody                                                               | statusCode | resultType | resultStructure                   |
+      |     -2 días | distintas válidas (mezcla IGUAL y MAYOR por destinatario) | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS      |        200 | éxito      | JSON_RESPONSE_REGISTRO_INCIDENCIA |
+      |     -2 días | distintas con inválida (MENOR en un destinatario)         | JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA |        400 | error      | ERROR_400_Bad_Request             |
+
+    Examples: Scenarios con 1 día posterior (rechazados por fecha futura)
+      | offsetFecha | descripcion                                               | requestBody                                                              | statusCode | resultType | resultStructure       |
+      |      +1 día | distintas válidas (mezcla IGUAL y MAYOR por destinatario) | JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS        |        400 | error      | ERROR_400_Bad_Request |
+      |      +1 día | distintas con inválida (MENOR en un destinatario)         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA   |        400 | error      | ERROR_400_Bad_Request |
+
+    Examples: Scenarios con 2 días posteriores (rechazados por fecha futura)
+      | offsetFecha | descripcion                                               | requestBody                                                               | statusCode | resultType | resultStructure       |
+      |     +2 días | distintas válidas (mezcla IGUAL y MAYOR por destinatario) | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS        |        400 | error      | ERROR_400_Bad_Request |
+      |     +2 días | distintas con inválida (MENOR en un destinatario)         | JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA   |        400 | error      | ERROR_400_Bad_Request |

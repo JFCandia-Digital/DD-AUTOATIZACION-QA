@@ -25,6 +25,7 @@
     "tipos": "npx cucumber-js --profile api --tags @Tipos",
     "api-report": "node src/reports/api/report-generator.js",
     "debug": "cross-env CUCUMBER_DEBUG=1 npx cucumber-js --profile debug",
+    "registroPorIncidencia": "npx cucumber-js --profile api --tags @RegistroPorIncidencia",
     "fechaAnteriorPosteriorRE": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRE",
     "fechaAnteriorPosteriorRI": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRI",
     "revision1": "npx cucumber-js --profile api --tags @Revision1",

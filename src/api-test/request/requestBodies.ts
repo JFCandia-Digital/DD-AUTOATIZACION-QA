@@ -291,6 +291,120 @@ const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR = {
   }
 };
 
+// Variantes con fechaHoraRecepcion DISTINTAS por destinatario (Registro por Incidencia)
+
+// -1 día: Mezcla válida (IGUAL y MAYOR)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// -1 día: Mezcla inválida (incluye OFFSET_MENOR en un destinatario)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// -2 días: Mezcla válida (IGUAL y MAYOR)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// -2 días: Mezcla inválida (incluye OFFSET_MENOR en un destinatario)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// +1 día: Mezcla válida (IGUAL y MAYOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// +1 día: Mezcla inválida (incluye OFFSET_MENOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// +2 días: Mezcla válida (IGUAL y MAYOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// +2 días: Mezcla inválida (incluye OFFSET_MENOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
 // =============================================================================
 // 4. VARIACIONES INVÁLIDAS (CAMPOS FALTANTES)
 // =============================================================================
@@ -841,6 +955,16 @@ export const registroExternoRequest = {
   "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL,
   "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR,
   "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR,
+
+  // fechaHoraRecepcion distintas por destinatario (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA,
 
   // Campos Faltantes (específicos de registro externo)
   "JSON_RE_SIN_CONFIGURACION_DESTINATARIOS": RE_SIN_CONFIGURACION_DESTINATARIOS,
