@@ -1,13 +1,13 @@
-@API @Comunicaciones @RegistroExterno @Revision2
+@API @Comunicaciones @RegistroExterno
 Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
 # =================================================================================
 # == Pruebas para método POST /comunicaciones/registro-externo
 # =================================================================================
-  
+
   Scenario: Enviar petición "POST" - "/comunicaciones/registro-externo" con datos válidos
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "Firmado_por_ecert.pdf" como "documentoPrincipal"
     And adjunto un archivo valido "ACEPTA.pdf" como "archivosAnexos"
     And adjunto un archivo valido "MINVU.pdf" como "archivosAnexos"
@@ -18,7 +18,7 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
 
   Scenario Outline: Validar "POST" - "/comunicaciones/registro-externo" con datos válidos y distintos token
     Given que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "<tipo_auth>"
-    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser <status>
@@ -33,15 +33,15 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
 
   Scenario: Validar "POST" - "/comunicaciones/registro-externo" con datos mínimos definido por el Swagger (Campos Opcionales Omitidos)
     Given que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 200
     And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_REGISTRO_EXTERNO"
 
-  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con 'archivosAnexos' valido y sin 'archivosAnexosInfo' en JSON registroComunicacionRequest
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con 'archivosAnexos' valido y sin 'archivosAnexosInfo' en JSON registroComunicacionExternaRequest
     Given que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     And adjunto un archivo valido "ACEPTA.pdf" como "archivosAnexos"
     When envío la petición multipart de registro externo
@@ -49,9 +49,9 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
     And el cuerpo de la respuesta debe tener la propiedad "error" con el valor "La información asociada archivos anexos es obligatoria."
 
-  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con 'archivosAnexos' valido y sin datos en 'archivosAnexosInfo' en JSON registroComunicacionRequest
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con 'archivosAnexos' valido y sin datos en 'archivosAnexosInfo' en JSON registroComunicacionExternaRequest
     Given que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS_VACIOS" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS_VACIOS" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     And adjunto un archivo valido "ACEPTA.pdf" como "archivosAnexos"
     When envío la petición multipart de registro externo
@@ -59,19 +59,19 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
     And el cuerpo de la respuesta debe tener la propiedad "error" con el valor "La información asociada archivos anexos debe coincidir con la cantidad de archivos anexos enviados."
 
-  Scenario: Validar "POST" - "/comunicaciones/registro-externo" sin 'archivosAnexos' y con 'archivosAnexosInfo' valido en JSON registroComunicacionRequest
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" sin 'archivosAnexos' y con 'archivosAnexosInfo' valido en JSON registroComunicacionExternaRequest
     Given que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "JSON_VALIDO_RE_CON_ANEXOS" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 400
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
     And el cuerpo de la respuesta debe tener la propiedad "error" con el valor "No se adjuntó un archivo anexo para la información proporcionada en archivosAnexosInfo."
 
-  Scenario Outline: Validar cada campo del JSON 'registroComunicacionRequest'
+  Scenario Outline: Validar cada campo del JSON 'registroComunicacionExternaRequest'
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 400
@@ -84,8 +84,6 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
       | JSON_RE_SIN_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                                           | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_SIN_ENTIDAD_DESTINATARIA_CODIFICADOR_ID_DESTINATARIOS_CONFIGURACION_DESTINATARIOS       | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_SIN_ENTIDAD_DESTINATARIA_CODIFICADOR_ID_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_ARRAY | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_RE_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS                               | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_RE_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_ARRAY                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_SIN_INFO_VACIO_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_OBJ                            | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_SIN_INFO_VACIO_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_ARRAY                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_SIN_INFO_VACIO_CONFIGURACION_DESTINATARIOS_ARRAY                                        | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
@@ -100,10 +98,10 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
       | JSON_RE_SIN_DV_USUARIO_SOLICITANTE                                                              | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_INFO_VACIO_USUARIO_SOLICITANTE_OBJ                                                      | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
 
-  Scenario Outline: Validar regla de nombre de archivos anexos en el JSON 'registroComunicacionRequest'
+  Scenario Outline: Validar regla de nombre de archivos anexos en el JSON 'registroComunicacionExternaRequest'
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     And adjunto un archivo valido "<archivo_anexo>" como "archivosAnexos"
     When envío la petición multipart de registro externo
@@ -112,15 +110,14 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
     And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
 
     Examples: Campos que fallan validación (400 - Validation failure)
-      | body_name                               | archivo_anexo                                                                                                                                                  | schema                | campo_error | mensaje_error_esperado |
+      | body_name                                  | archivo_anexo                                                                                                                                               | schema                | campo_error | mensaje_error_esperado |
       | JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO_RE | yz                                                                                                                                                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO_RE | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
 
-  
-  Scenario Outline: Validar tipos de datos en JSON 'registroComunicacionRequest' (cada campo del JSON)
+  Scenario Outline: Validar tipos de datos en JSON 'registroComunicacionExternaRequest' (cada campo del JSON)
     Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
     And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
-    And  uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionRequest"
+    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionExternaRequest"
     And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
     When envío la petición multipart de registro externo
     Then el estado de la respuesta debe ser 400
@@ -198,7 +195,7 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
       | JSON_RE_RUN_INTEGER_A_ARRAY_CON_DATO                                                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_RUN_INTEGER_A_OBJECT                                                                 | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_RUN_INTEGER_A_OBJECT_CON_DATO                                                        | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
-      | JSON_RE_FECHA_HORA_DE_STRING_A_NUMBER                                                        | ERROR_400_Bad_Request | "message"   | "Petición no válida."  | 
+      | JSON_RE_FECHA_HORA_DE_STRING_A_NUMBER                                                        | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_FECHA_HORA_DE_STRING_A_STRING_CARACTER_ESPECIAL                                      | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_FECHA_HORA_DE_STRING_A_BOOLEAN                                                       | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_FECHA_HORA_DE_STRING_A_ARRAY_VACIO                                                   | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
@@ -212,3 +209,85 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/registro-externo"
       | JSON_RE_ENTIDAD_DES_COD_ID_INTEGER_A_ARRAY_CON_DATO                                          | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_ENTIDAD_DES_COD_ID_INTEGER_A_OBJECT                                                  | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
       | JSON_RE_ENTIDAD_DES_COD_ID_INTEGER_A_OBJECT_CON_DATO                                         | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+
+  Scenario Outline: Validar tipos de datos en JSON 'registroComunicacionExternaRequest' (cada campo del JSON)
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 200
+    And el cuerpo de la respuesta debe tener la estructura de éxito "<schema>"
+    And el cuerpo de la respuesta debe tener la propiedad <campo> con el valor <mensaje_esperado>
+
+    Examples:
+      | body_name                                                               | schema                         | campo     | mensaje_esperado |
+      | JSON_RE_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS       | JSON_RESPONSE_REGISTRO_EXTERNO | "message" | "OK"             |
+      | JSON_RE_SIN_IS_EN_COPIA_DESTINATARIOS_CONFIGURACION_DESTINATARIOS_ARRAY | JSON_RESPONSE_REGISTRO_EXTERNO | "message" | "OK"             |
+# =================================================================================
+# == Pruebas de formato inválido para fechaHoraDespachoExterno (Registro Externo)
+# =================================================================================
+
+  @FormatoFechaRE
+  Scenario Outline: Validar formato del campo "fechaHoraDespachoExterno" en JSON 'registroComunicacionExternaRequest'
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "<body_name>" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 400
+    And el cuerpo de la respuesta debe tener la estructura de error "<schema>"
+    And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
+
+    Examples: Formatos de fecha incompletos (solo fecha o solo hora)
+      | body_name                          | schema                | campo_error | mensaje_error_esperado |
+      | JSON_RE_FECHA_HORA_DE_SOLO_FECHA   | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+      | JSON_RE_FECHA_HORA_DE_SOLO_HORA    | ERROR_400_Bad_Request | "message"   | "Petición no válida."  |
+
+# =================================================================================
+# == Pruebas de fecha de despacho externo con días anteriores (Registro Externo)
+# =================================================================================
+
+  @FechaAnteriorPosteriorRE
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con fechaHoraDespachoExterno de 1 día anterior
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE_FECHA_MENOS_1_DIA" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 200
+    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_REGISTRO_EXTERNO"
+
+  @FechaAnteriorPosteriorRE
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con fechaHoraDespachoExterno de 2 días anteriores
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE_FECHA_MENOS_2_DIAS" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 200
+    And el cuerpo de la respuesta debe tener la estructura de éxito "JSON_RESPONSE_REGISTRO_EXTERNO"
+
+# =================================================================================
+# == Pruebas de fecha de despacho externo con días posteriores (Registro Externo)
+# =================================================================================
+
+  @FechaAnteriorPosteriorRE
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con fechaHoraDespachoExterno de 1 día posterior
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE_FECHA_MAS_1_DIA" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 400
+    And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
+
+  @FechaAnteriorPosteriorRE
+  Scenario: Validar "POST" - "/comunicaciones/registro-externo" con fechaHoraDespachoExterno de 2 días posteriores
+    Given que solicito un token de acceso con el usuario "CLIENT_ID_PDI" y el password "CLIENT_SECRET_PDI"
+    And que preparo una petición "POST" a "/comunicaciones/registro-externo" con token "válido"
+    And uso el cuerpo de registro externo llamado "JSON_MINIMO_VALIDO_RE_FECHA_MAS_2_DIAS" como campo "registroComunicacionExternaRequest"
+    And adjunto un archivo valido "2_FIRMANTES_EN_DOC_DIGITAL.pdf" como "documentoPrincipal"
+    When envío la petición multipart de registro externo
+    Then el estado de la respuesta debe ser 400
+    And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"

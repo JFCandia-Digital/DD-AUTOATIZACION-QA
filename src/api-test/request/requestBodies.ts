@@ -65,6 +65,27 @@ const JSON_MINIMO_VALIDO_RE = {
   "plataformaDespachoExterno": 598
 };
 
+// --- Variantes con fecha de despacho en días anteriores (Registro Externo) ---
+const JSON_MINIMO_VALIDO_RE_FECHA_MENOS_1_DIA = {
+  ...JSON_MINIMO_VALIDO_RE,
+  "fechaHoraDespachoExterno": "OFFSET_1_DIA"
+};
+
+const JSON_MINIMO_VALIDO_RE_FECHA_MENOS_2_DIAS = {
+  ...JSON_MINIMO_VALIDO_RE,
+  "fechaHoraDespachoExterno": "OFFSET_2_DIAS"
+};
+
+// --- Variantes con fecha de despacho en días posteriores (Registro Externo) ---
+const JSON_MINIMO_VALIDO_RE_FECHA_MAS_1_DIA = {
+  ...JSON_MINIMO_VALIDO_RE,
+  "fechaHoraDespachoExterno": "OFFSET_MAS_1_DIA"
+};
+
+const JSON_MINIMO_VALIDO_RE_FECHA_MAS_2_DIAS = {
+  ...JSON_MINIMO_VALIDO_RE,
+  "fechaHoraDespachoExterno": "OFFSET_MAS_2_DIAS"
+};
 
 const JSON_VALIDO_RE_CON_ANEXOS = crearVarianteArchivo(JSON_MINIMO_VALIDO_RE, "MINVU.pdf");
 
@@ -84,6 +105,28 @@ const JSON_MINIMO_VALIDO_RI = {
   "plataformaDespachoExterno": 598
 };
 
+// --- Variantes con fecha de despacho en días anteriores (Registro por Incidencia) ---
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "fechaHoraDespachoExterno": "OFFSET_1_DIA"
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "fechaHoraDespachoExterno": "OFFSET_2_DIAS"
+};
+
+// --- Variantes con fecha de despacho en días posteriores (Registro por Incidencia) ---
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "fechaHoraDespachoExterno": "OFFSET_MAS_1_DIA"
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "fechaHoraDespachoExterno": "OFFSET_MAS_2_DIAS"
+};
+
 const JSON_VALIDO_RI_CON_ANEXOS = crearVarianteArchivo(JSON_MINIMO_VALIDO_RI, "MINVU.pdf");
 
 const JSON_VALIDO_RI_CON_ANEXOS_VACIOS = {
@@ -93,6 +136,274 @@ const JSON_VALIDO_RI_CON_ANEXOS_VACIOS = {
 
 const JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO_RI = crearVarianteArchivo(JSON_MINIMO_VALIDO_RI, "ab");
 const JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO_RI = crearVarianteArchivo(JSON_MINIMO_VALIDO_RI, "a".repeat(151) + ".pdf");
+
+// --- Variantes con fechaHoraRecepcion (Registro por Incidencia) ---
+const JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+// Variante con fechaHoraRecepcion > fechaHoraDespachoExterno (más reciente)
+const JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+// Variante con fechaHoraRecepcion < fechaHoraDespachoExterno (más antigua)
+const JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+// Combinaciones con offsets específicos y fechaHoraRecepcion
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_IGUAL"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MAYOR"
+    }))
+  }
+};
+
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": JSON_MINIMO_VALIDO.configuracionDestinatarios.destinatarios.map(d => ({
+      ...d,
+      "fechaHoraRecepcion": "OFFSET_MENOR"
+    }))
+  }
+};
+
+// Variantes con fechaHoraRecepcion DISTINTAS por destinatario (Registro por Incidencia)
+
+// -1 día: Mezcla válida (IGUAL y MAYOR)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// -1 día: Mezcla inválida (incluye OFFSET_MENOR en un destinatario)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// -2 días: Mezcla válida (IGUAL y MAYOR)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// -2 días: Mezcla inválida (incluye OFFSET_MENOR en un destinatario)
+const JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// +1 día: Mezcla válida (IGUAL y MAYOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// +1 día: Mezcla inválida (incluye OFFSET_MENOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
+
+// +2 días: Mezcla válida (IGUAL y MAYOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" }
+    ]
+  }
+};
+
+// +2 días: Mezcla inválida (incluye OFFSET_MENOR) — rechazada por fechaHoraDespachoExterno futura
+const JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA = {
+  ...JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+  "configuracionDestinatarios": {
+    "destinatarios": [
+      { "entidadDestinatariaCodificadorId": 175, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 156, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" },
+      { "entidadDestinatariaCodificadorId": 27,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MENOR" },
+      { "entidadDestinatariaCodificadorId": 522, "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_IGUAL" },
+      { "entidadDestinatariaCodificadorId": 55,  "isEnCopia": false, "fechaHoraRecepcion": "OFFSET_MAYOR" }
+    ]
+  }
+};
 
 // =============================================================================
 // 4. VARIACIONES INVÁLIDAS (CAMPOS FALTANTES)
@@ -215,13 +526,13 @@ const JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO = crearVarianteVa
 
 // --- Campo: configuracionDestinatarios.destinatariosReferenciados ---
 const PATH_DEST_REF = 'configuracionDestinatarios.destinatariosReferenciados';
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, "Dato String");
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, 2);
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, true);
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, [2]);
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, {});
-const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, { destinatariosReferenciados: 1 });
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, "Dato String");
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, 2);
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, true);
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, [2]);
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, {});
+// const JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO = crearVarianteValor(JSON_MINIMO_VALIDO, PATH_DEST_REF, { destinatariosReferenciados: 1 });
 
 // --- Campo: folio ---
 const PATH_FOLIO = 'folio';
@@ -362,13 +673,13 @@ const RE_IS_EN_COPIA_BOOL_A_OBJ_EMPTY = crearVarianteValor(BASE_RE, PATH_IS_EN_C
 const RE_IS_EN_COPIA_BOOL_A_OBJ_DATA = crearVarianteValor(BASE_RE, PATH_IS_EN_COPIA, { val: false });
 
 // --- destinatariosReferenciados ---
-const RE_DEST_REF_ARR_A_STR = crearVarianteValor(BASE_RE, PATH_DEST_REF, "Dato String");
-const RE_DEST_REF_ARR_A_SPECIAL = crearVarianteValor(BASE_RE, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
-const RE_DEST_REF_ARR_A_INT = crearVarianteValor(BASE_RE, PATH_DEST_REF, 2);
-const RE_DEST_REF_ARR_A_BOOL = crearVarianteValor(BASE_RE, PATH_DEST_REF, true);
-const RE_DEST_REF_ARR_A_ARR_DATA = crearVarianteValor(BASE_RE, PATH_DEST_REF, [2]);
-const RE_DEST_REF_ARR_A_OBJ_EMPTY = crearVarianteValor(BASE_RE, PATH_DEST_REF, {});
-const RE_DEST_REF_ARR_A_OBJ_DATA = crearVarianteValor(BASE_RE, PATH_DEST_REF, { val: 1 });
+// const RE_DEST_REF_ARR_A_STR = crearVarianteValor(BASE_RE, PATH_DEST_REF, "Dato String");
+// const RE_DEST_REF_ARR_A_SPECIAL = crearVarianteValor(BASE_RE, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
+// const RE_DEST_REF_ARR_A_INT = crearVarianteValor(BASE_RE, PATH_DEST_REF, 2);
+// const RE_DEST_REF_ARR_A_BOOL = crearVarianteValor(BASE_RE, PATH_DEST_REF, true);
+// const RE_DEST_REF_ARR_A_ARR_DATA = crearVarianteValor(BASE_RE, PATH_DEST_REF, [2]);
+// const RE_DEST_REF_ARR_A_OBJ_EMPTY = crearVarianteValor(BASE_RE, PATH_DEST_REF, {});
+// const RE_DEST_REF_ARR_A_OBJ_DATA = crearVarianteValor(BASE_RE, PATH_DEST_REF, { val: 1 });
 
 // --- folio ---
 const RE_FOLIO_STR_A_SPECIAL = crearVarianteValor(BASE_RE, PATH_FOLIO, "#//´,¨.");
@@ -435,6 +746,10 @@ const RE_FECHA_HORA_DE_STR_A_ARR_DATA = crearVarianteValor(BASE_RE, PATH_FECHA_H
 const RE_FECHA_HORA_DE_STR_A_OBJ_EMPTY = crearVarianteValor(BASE_RE, PATH_FECHA_HORA_DE, {});
 const RE_FECHA_HORA_DE_STR_A_OBJ_DATA = crearVarianteValor(BASE_RE, PATH_FECHA_HORA_DE, { val: 1 });
 
+// --- fechaHoraDespachoExterno - Formato incompleto (solo fecha o solo hora) ---
+const RE_FECHA_HORA_DE_SOLO_FECHA = crearVarianteValor(BASE_RE, PATH_FECHA_HORA_DE, "19-02-2026");
+const RE_FECHA_HORA_DE_SOLO_HORA = crearVarianteValor(BASE_RE, PATH_FECHA_HORA_DE, "10:30:00");
+
 // --- entidadDespachadoraCodificadorId ---
 const RE_ENTIDAD_DES_COD_ID_INT_A_STR = crearVarianteValor(BASE_RE, PATH_ENTIDAD_DES_COD_ID, "11111111");
 const RE_ENTIDAD_DES_COD_ID_INT_A_SPECIAL = crearVarianteValor(BASE_RE, PATH_ENTIDAD_DES_COD_ID, "#//´,¨.");
@@ -497,13 +812,13 @@ const RI_IS_EN_COPIA_BOOL_A_OBJ_EMPTY = crearVarianteValor(BASE_RI, PATH_IS_EN_C
 const RI_IS_EN_COPIA_BOOL_A_OBJ_DATA = crearVarianteValor(BASE_RI, PATH_IS_EN_COPIA, { val: false });
 
 // --- destinatariosReferenciados ---
-const RI_DEST_REF_ARR_A_STR = crearVarianteValor(BASE_RI, PATH_DEST_REF, "Dato String");
-const RI_DEST_REF_ARR_A_SPECIAL = crearVarianteValor(BASE_RI, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
-const RI_DEST_REF_ARR_A_INT = crearVarianteValor(BASE_RI, PATH_DEST_REF, 2);
-const RI_DEST_REF_ARR_A_BOOL = crearVarianteValor(BASE_RI, PATH_DEST_REF, true);
-const RI_DEST_REF_ARR_A_ARR_DATA = crearVarianteValor(BASE_RI, PATH_DEST_REF, [2]);
-const RI_DEST_REF_ARR_A_OBJ_EMPTY = crearVarianteValor(BASE_RI, PATH_DEST_REF, {});
-const RI_DEST_REF_ARR_A_OBJ_DATA = crearVarianteValor(BASE_RI, PATH_DEST_REF, { val: 1 });
+// const RI_DEST_REF_ARR_A_STR = crearVarianteValor(BASE_RI, PATH_DEST_REF, "Dato String");
+// const RI_DEST_REF_ARR_A_SPECIAL = crearVarianteValor(BASE_RI, PATH_DEST_REF, VALORES_INVALIDOS.STRING_SPECIAL);
+// const RI_DEST_REF_ARR_A_INT = crearVarianteValor(BASE_RI, PATH_DEST_REF, 2);
+// const RI_DEST_REF_ARR_A_BOOL = crearVarianteValor(BASE_RI, PATH_DEST_REF, true);
+// const RI_DEST_REF_ARR_A_ARR_DATA = crearVarianteValor(BASE_RI, PATH_DEST_REF, [2]);
+// const RI_DEST_REF_ARR_A_OBJ_EMPTY = crearVarianteValor(BASE_RI, PATH_DEST_REF, {});
+// const RI_DEST_REF_ARR_A_OBJ_DATA = crearVarianteValor(BASE_RI, PATH_DEST_REF, { val: 1 });
 
 // --- folio ---
 const RI_FOLIO_STR_A_SPECIAL = crearVarianteValor(BASE_RI, PATH_FOLIO, "#//´,¨.");
@@ -570,6 +885,10 @@ const RI_FECHA_HORA_DE_STR_A_ARR_DATA = crearVarianteValor(BASE_RI, PATH_FECHA_H
 const RI_FECHA_HORA_DE_STR_A_OBJ_EMPTY = crearVarianteValor(BASE_RI, PATH_FECHA_HORA_DE, {});
 const RI_FECHA_HORA_DE_STR_A_OBJ_DATA = crearVarianteValor(BASE_RI, PATH_FECHA_HORA_DE, { val: 1 });
 
+// --- fechaHoraDespachoExterno - Formato incompleto (solo fecha o solo hora) ---
+const RI_FECHA_HORA_DE_SOLO_FECHA = crearVarianteValor(BASE_RI, PATH_FECHA_HORA_DE, "19-02-2026");
+const RI_FECHA_HORA_DE_SOLO_HORA = crearVarianteValor(BASE_RI, PATH_FECHA_HORA_DE, "10:30:00");
+
 // --- entidadDespachadoraCodificadorId ---
 const RI_ENTIDAD_DES_COD_ID_INT_A_STR = crearVarianteValor(BASE_RI, PATH_ENTIDAD_DES_COD_ID, "11111111");
 const RI_ENTIDAD_DES_COD_ID_INT_A_SPECIAL = crearVarianteValor(BASE_RI, PATH_ENTIDAD_DES_COD_ID, "#//´,¨.");
@@ -595,6 +914,57 @@ export const registroExternoRequest = {
   "JSON_VALIDO_RI_CON_ANEXOS_VACIOS": JSON_VALIDO_RI_CON_ANEXOS_VACIOS,
   "JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO_RI": JSON_CON_ARCHIVOS_ANEXOS_FILENAME_CORTO_RI,
   "JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO_RI": JSON_CON_ARCHIVOS_ANEXOS_FILENAME_LARGO_RI,
+
+  // Variantes con fecha de despacho en días anteriores (Registro Externo)
+  "JSON_MINIMO_VALIDO_RE_FECHA_MENOS_1_DIA": JSON_MINIMO_VALIDO_RE_FECHA_MENOS_1_DIA,
+  "JSON_MINIMO_VALIDO_RE_FECHA_MENOS_2_DIAS": JSON_MINIMO_VALIDO_RE_FECHA_MENOS_2_DIAS,
+
+  // Variantes con fecha de despacho en días anteriores (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS,
+
+  // Variantes con fecha de despacho en días posteriores (Registro Externo)
+  "JSON_MINIMO_VALIDO_RE_FECHA_MAS_1_DIA": JSON_MINIMO_VALIDO_RE_FECHA_MAS_1_DIA,
+  "JSON_MINIMO_VALIDO_RE_FECHA_MAS_2_DIAS": JSON_MINIMO_VALIDO_RE_FECHA_MAS_2_DIAS,
+
+  // Variantes con fecha de despacho en días posteriores (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS,
+
+  // Variantes con fechaHoraRecepcion (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (1 día anterior)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (2 días anteriores)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (1 día posterior)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_MENOR,
+
+  // Combinaciones de fecha despacho con fechaHoraRecepcion (2 días posteriores)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_IGUAL,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MAYOR,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_MENOR,
+
+  // fechaHoraRecepcion distintas por destinatario (Registro por Incidencia)
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MENOS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_1_DIA_RECEPCION_DISTINTAS_CON_INVALIDA,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_VALIDAS,
+  "JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA": JSON_MINIMO_VALIDO_RI_FECHA_MAS_2_DIAS_RECEPCION_DISTINTAS_CON_INVALIDA,
 
   // Campos Faltantes (específicos de registro externo)
   "JSON_RE_SIN_CONFIGURACION_DESTINATARIOS": RE_SIN_CONFIGURACION_DESTINATARIOS,
@@ -677,13 +1047,13 @@ export const registroExternoRequest = {
   "JSON_RE_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_VACIO": RE_IS_EN_COPIA_BOOL_A_OBJ_EMPTY,
   "JSON_RE_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO": RE_IS_EN_COPIA_BOOL_A_OBJ_DATA,
 
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": RE_DEST_REF_ARR_A_STR,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": RE_DEST_REF_ARR_A_SPECIAL,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": RE_DEST_REF_ARR_A_INT,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": RE_DEST_REF_ARR_A_BOOL,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": RE_DEST_REF_ARR_A_ARR_DATA,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": RE_DEST_REF_ARR_A_OBJ_EMPTY,
-  "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": RE_DEST_REF_ARR_A_OBJ_DATA,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": RE_DEST_REF_ARR_A_STR,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": RE_DEST_REF_ARR_A_SPECIAL,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": RE_DEST_REF_ARR_A_INT,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": RE_DEST_REF_ARR_A_BOOL,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": RE_DEST_REF_ARR_A_ARR_DATA,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": RE_DEST_REF_ARR_A_OBJ_EMPTY,
+  // "JSON_RE_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": RE_DEST_REF_ARR_A_OBJ_DATA,
 
   "JSON_RE_FOLIO_STRING_A_STRING_CARACTER_ESPECIAL": RE_FOLIO_STR_A_SPECIAL,
   "JSON_RE_FOLIO_STRING_A_INTEGER": RE_FOLIO_STR_A_INT,
@@ -742,6 +1112,8 @@ export const registroExternoRequest = {
   "JSON_RE_FECHA_HORA_DE_STRING_A_ARRAY_CON_DATO": RE_FECHA_HORA_DE_STR_A_ARR_DATA,
   "JSON_RE_FECHA_HORA_DE_STRING_A_OBJECT": RE_FECHA_HORA_DE_STR_A_OBJ_EMPTY,
   "JSON_RE_FECHA_HORA_DE_STRING_A_OBJECT_CON_DATO": RE_FECHA_HORA_DE_STR_A_OBJ_DATA,
+  "JSON_RE_FECHA_HORA_DE_SOLO_FECHA": RE_FECHA_HORA_DE_SOLO_FECHA,
+  "JSON_RE_FECHA_HORA_DE_SOLO_HORA": RE_FECHA_HORA_DE_SOLO_HORA,
 
   "JSON_RE_ENTIDAD_DES_COD_ID_INTEGER_A_STRING": RE_ENTIDAD_DES_COD_ID_INT_A_STR,
   "JSON_RE_ENTIDAD_DES_COD_ID_INTEGER_A_STRING_CARACTER_ESPECIAL": RE_ENTIDAD_DES_COD_ID_INT_A_SPECIAL,
@@ -792,13 +1164,13 @@ export const registroExternoRequest = {
   "JSON_RI_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_VACIO": RI_IS_EN_COPIA_BOOL_A_OBJ_EMPTY,
   "JSON_RI_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO": RI_IS_EN_COPIA_BOOL_A_OBJ_DATA,
 
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": RI_DEST_REF_ARR_A_STR,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": RI_DEST_REF_ARR_A_SPECIAL,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": RI_DEST_REF_ARR_A_INT,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": RI_DEST_REF_ARR_A_BOOL,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": RI_DEST_REF_ARR_A_ARR_DATA,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": RI_DEST_REF_ARR_A_OBJ_EMPTY,
-  "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": RI_DEST_REF_ARR_A_OBJ_DATA,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": RI_DEST_REF_ARR_A_STR,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": RI_DEST_REF_ARR_A_SPECIAL,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": RI_DEST_REF_ARR_A_INT,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": RI_DEST_REF_ARR_A_BOOL,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": RI_DEST_REF_ARR_A_ARR_DATA,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": RI_DEST_REF_ARR_A_OBJ_EMPTY,
+  // "JSON_RI_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": RI_DEST_REF_ARR_A_OBJ_DATA,
 
   "JSON_RI_FOLIO_STRING_A_STRING_CARACTER_ESPECIAL": RI_FOLIO_STR_A_SPECIAL,
   "JSON_RI_FOLIO_STRING_A_INTEGER": RI_FOLIO_STR_A_INT,
@@ -857,6 +1229,8 @@ export const registroExternoRequest = {
   "JSON_RI_FECHA_HORA_DE_STRING_A_ARRAY_CON_DATO": RI_FECHA_HORA_DE_STR_A_ARR_DATA,
   "JSON_RI_FECHA_HORA_DE_STRING_A_OBJECT": RI_FECHA_HORA_DE_STR_A_OBJ_EMPTY,
   "JSON_RI_FECHA_HORA_DE_STRING_A_OBJECT_CON_DATO": RI_FECHA_HORA_DE_STR_A_OBJ_DATA,
+  "JSON_RI_FECHA_HORA_DE_SOLO_FECHA": RI_FECHA_HORA_DE_SOLO_FECHA,
+  "JSON_RI_FECHA_HORA_DE_SOLO_HORA": RI_FECHA_HORA_DE_SOLO_HORA,
 
   "JSON_RI_ENTIDAD_DES_COD_ID_INTEGER_A_STRING": RI_ENTIDAD_DES_COD_ID_INT_A_STR,
   "JSON_RI_ENTIDAD_DES_COD_ID_INTEGER_A_STRING_CARACTER_ESPECIAL": RI_ENTIDAD_DES_COD_ID_INT_A_SPECIAL,
@@ -927,13 +1301,13 @@ export const comunicacionRequest = {
   "JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_ARRAY_CON_DATO": JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_ARRAY_CON_DATO,
   "JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_VACIO": JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_VACIO,
   "JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO": JSON_IS_EN_COPIA_DESTINATARIOS_BOOLEAN_A_OBJECT_CON_DATO,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO,
-  "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_STRING_CARACTER_ESPECIAL,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_INTEGER,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_BOOLEAN,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_ARRAY_CON_DATO,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_VACIO,
+  // "JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO": JSON_DESTINATARIOS_REFERENCIADOS_ARRAY_A_OBJECT_CON_DATO,
   "JSON_FOLIO_STRING_A_STRING_CARACTER_ESPECIAL": JSON_FOLIO_STRING_A_STRING_CARACTER_ESPECIAL,
   "JSON_FOLIO_STRING_A_INTEGER": JSON_FOLIO_STRING_A_INTEGER,
   "JSON_FOLIO_STRING_A_BOOLEAN": JSON_FOLIO_STRING_A_BOOLEAN,

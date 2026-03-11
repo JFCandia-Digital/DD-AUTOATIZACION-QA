@@ -23,9 +23,9 @@ const baseResponse = {
 };
 
 const baseEntidad = {
-  "id": "number",
+  "entidadId": "number",
   "entidadCodificadorId": "number",
-  "nombre": "string",
+  "entidadNombre": "string",
   "isPrincipal": "boolean",
   "entidadDependenciaId": "number",
   "entidadDependenciaCodificadorId": "number",
@@ -39,8 +39,8 @@ const baseEntidadDetalle = {
 };
 
 const baseBusqueda = {
-  "id": "number",
-  "nombre": "string",
+  "entidadId": "number",
+  "entidadNombre": "string",
   "isPrincipal": "boolean",
   "entidadDependenciaId?": "number",
   "entidadDependenciaCodificadorId?": "number",
@@ -54,9 +54,9 @@ const baseInfoCreador = {
   "entidadId": "number",
   "entidadNombre": "string",
   "usuarioCargo": "string",
-  "usuarioEmail": "string",
+  "correoInstitucional": "string",
   "usuarioId": "number",
-  "usuarioNombre": "string",
+  "nombreCompleto": "string",
   "usuarioRun": "string"
 };
 
@@ -65,8 +65,47 @@ const baseFirmante = {
   "entidadNombre": "string",
   "usuarioCargo": "string",
   "usuarioId": "number",
-  "usuarioNombre": "string",
+  "nombreCompleto": "string",
   "usuarioRun": "string"
+};
+
+const baseUsuarioResumen = {
+  "usuarioId": "number",
+  "usuarioRun": "string",
+  "nombreCompleto": "string",
+  "correoInstitucional": "string",
+  "usuarioCargo": "string",
+  "entidadId": "number",
+  "entidadNombre": "string"
+};
+
+const baseDocumentoPrincipal = {
+  "documentoId": "number",
+  "fechaCreacion": "string",
+  "id": "string",
+  "materia": "string",
+  "nombreArchivo": "string",
+  "tipoDoc": "string",
+  "tipoDocId": "number",
+  "reservado": "boolean",
+  "infoCertificados": [
+    {
+      "runFirmante": "string",
+      "nombreFirmante": "string",
+      "fechaFirma": "string"
+    }
+  ]
+};
+
+const baseAnexo = {
+  "id": "string",
+  "nombreArchivo": "string",
+  "reservado": "boolean"
+};
+
+const baseEntidadResumen = {
+  "entidadId": "number",
+  "entidadNombre": "string"
 };
 
 const baseFirmanteTipo2 = {
@@ -85,17 +124,18 @@ const genericResponse = {
 };
 
 const baseUsuarioEntidad = {
-  "run": "number",
   "dv": "string",
-  "correoInstitucional": "string",
-  "cargo": "string",
   "entidad": {
-    "nombre": "string",
-    "id": "number"
+    "entidadId": "number",
+    "entidadNombre": "string",
+    "entidadCodificadorId?": "number"
   },
-  "nombreCompleto": "string",
   "roles": ["string"],
-  "id": "number"
+  "usuarioId": "number",
+  "usuarioRun": "string",
+  "nombreCompleto": "string",
+  "correoInstitucional": "string",
+  "usuarioCargo": "string"
 };
 
 const baseTareaRecepcion = {
@@ -212,11 +252,15 @@ export const successStructures = {
   },
 
   "JSON_RESPONSE_GET_DESPACHAR_ID": {
-    ...baseResponse,
+    "status": "number",
+    "message": "string",
+    "count": "number",
+    "timestamp": "string",
     "result": {
       "comunicacionId": "number",
       "destinatarios": {
-        "usuariosDestinatarios": "object"
+        "correos": "string",
+        "usuariosDestinatarios": [] // Cambiado de "object" a [] para mayor precisión
       },
       "documentoPrincipal": {
         "documentoId": "number",
@@ -227,21 +271,26 @@ export const successStructures = {
         "tipoDoc": "string",
         "tipoDocId": "number",
         "reservado": "boolean",
-        "infoCertificados": "object"
+        "infoCertificados": []
       },
-      "documentosAnexos": "object",
+      "documentosAnexos": [],
       "entidadCreadora": {
-        "nombre": "string",
-        "id": "number"
+        "entidadId": "number",
+        "entidadNombre": "string"
       },
-      "infoCreador": baseInfoCreador,
+      "infoCreador": baseUsuarioResumen,
       "infoFirmas": {
         "firmantes": [baseFirmante]
       },
       "infoVisaciones": {
         "tipo": "string",
-        "visadores": "object"
-      }
+        "visadores": []
+      },
+      "tipoPlataformaOrigen": "string",
+      "tipoTramitacion": "string",
+      "tipoTramitacionDescripcion": "string",
+      "estadoTramitacion": "string",
+      "estadoTramitacionDescripcion": "string"
     }
   },
 

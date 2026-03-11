@@ -25,27 +25,30 @@
     "tipos": "npx cucumber-js --profile api --tags @Tipos",
     "api-report": "node src/reports/api/report-generator.js",
     "debug": "cross-env CUCUMBER_DEBUG=1 npx cucumber-js --profile debug",
-    "revision": "npx cucumber-js --profile api --tags @Revision",
-    "revision2": "npx cucumber-js --profile api --tags @Revision2"
+    "registroPorIncidencia": "npx cucumber-js --profile api --tags @RegistroPorIncidencia",
+    "fechaAnteriorPosteriorRE": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRE",
+    "fechaAnteriorPosteriorRI": "npx cucumber-js --profile api --tags @FechaAnteriorPosteriorRI",
+    "revision1": "npx cucumber-js --profile api --tags @Revision1",
+    "revision2": "npx cucumber-js --profile api --tags @FechaRecepcion"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "Automation framework - API Testing",
   "devDependencies": {
-    "@cucumber/cucumber": "^12.2.0",
+    "@cucumber/cucumber": "^12.6.0",
     "@playwright/test": "^1.47.2",
-    "@types/node": "^22.15.19",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.5.0",
+    "@types/node": "^25.2.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
     "multiple-cucumber-html-reporter": "^3.9.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@types/lodash": "^4.17.20",
-    "axios": "^1.8.4",
-    "form-data": "^4.0.0",
+    "@types/lodash": "^4.17.23",
+    "axios": "^1.13.5",
+    "form-data": "^4.0.5",
     "lodash": "^4.17.23"
   }
 }

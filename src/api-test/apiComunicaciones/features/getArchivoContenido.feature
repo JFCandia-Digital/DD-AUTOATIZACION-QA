@@ -1,4 +1,4 @@
-@API @Comunicaciones @GetArchivoContenido @Revision
+@API @Comunicaciones @GetArchivoContenido
 Feature: Pruebas realizadas a la API "GET" - "/comunicaciones/archivo-contenido/:comunicacion_id/:archivo_uuid"
 
   Scenario: Obtener contenido del documento principal y anexos usando IDs dinámicos

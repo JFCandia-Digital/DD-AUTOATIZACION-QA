@@ -22,6 +22,10 @@ def publishCucumberReport() {
 pipeline {
     agent { label 'playwright' }
 
+    triggers {
+        cron('0 10 * * 1-5')
+    }
+
     parameters {
         // --- Checkboxes para Tags de Pruebas ---
         booleanParam(name: 'TAG_AUTHENTICATION', defaultValue: true, description: 'Ejecutar tests de API Authentications (@Auth)')
@@ -52,13 +56,20 @@ pipeline {
                 script {
 
                     // --- 2. Lógica para procesar tags seleccionados ---
+                    def isCronTrigger = currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() > 0
+
                     def selectedTags = []
-                    if (params.TAG_AUTHENTICATION) { selectedTags.add('@Auth') }
-                    if (params.TAG_COMUNICACION) { selectedTags.add('@Comunicaciones') }
-                    if (params.TAG_DESPACHAR) { selectedTags.add('@Despachar') }
-                    if (params.TAG_ENTIDADES) { selectedTags.add('@Entidades') }
-                    if (params.TAG_TIPOS) { selectedTags.add('@Tipos') }
-                    if (params.TAG_REGRESSION) { selectedTags.add('@API') }
+                    if (isCronTrigger) {
+                        echo "Build disparado por cron. Ejecutando TAG_REGRESSION (@API)."
+                        selectedTags.add('@API')
+                    } else {
+                        if (params.TAG_AUTHENTICATION) { selectedTags.add('@Auth') }
+                        if (params.TAG_COMUNICACION) { selectedTags.add('@Comunicaciones') }
+                        if (params.TAG_DESPACHAR) { selectedTags.add('@Despachar') }
+                        if (params.TAG_ENTIDADES) { selectedTags.add('@Entidades') }
+                        if (params.TAG_TIPOS) { selectedTags.add('@Tipos') }
+                        if (params.TAG_REGRESSION) { selectedTags.add('@API') }
+                    }
                     
                     def tagsArgument = ''
                     if (!selectedTags.isEmpty()) {
