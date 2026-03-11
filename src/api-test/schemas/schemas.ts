@@ -71,12 +71,12 @@ const baseFirmante = {
 
 const baseUsuarioResumen = {
   "usuarioId": "number",
-  "usuarioRun": "string",
-  "nombreCompleto": "string",
-  "correoInstitucional": "string",
-  "usuarioCargo": "string",
   "entidadId": "number",
-  "entidadNombre": "string"
+  "entidadNombre": "string",
+  "usuarioRun?": "string",
+  "nombreCompleto?": "string",
+  "correoInstitucional?": "string",
+  "usuarioCargo?": "string"
 };
 
 const baseDocumentoPrincipal = {
