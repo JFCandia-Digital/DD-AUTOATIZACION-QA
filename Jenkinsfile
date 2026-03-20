@@ -23,7 +23,7 @@ pipeline {
     agent { label 'playwright' }
 
     triggers {
-        cron('0 10 * * 1-5')
+        cron('0 10,15 * * 1-5')
     }
 
     parameters {
