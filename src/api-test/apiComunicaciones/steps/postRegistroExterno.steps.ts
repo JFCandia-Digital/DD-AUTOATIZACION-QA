@@ -76,7 +76,7 @@ Then('uso el cuerpo de registro externo llamado {string} como campo {string}', f
     return;
   }
 
-  const requestBodyOriginal = registroExternoRequest[bodyName];
+  const requestBodyOriginal = (registroExternoRequest as Record<string, any>)[bodyName];
 
   if (!requestBodyOriginal) {
     throw new Error(`El cuerpo '${bodyName}' no se encuentra en la sección 'registroExternoRequest' de requestBodies.ts`);
@@ -129,7 +129,7 @@ When('envío la petición multipart de registro externo', { timeout: 60 * 1000 }
        && 'archivosAnexosInfo' in this.requestBody 
        && Array.isArray(this.requestBody.archivosAnexosInfo)
        && this.requestBody.archivosAnexosInfo.length > 0
-       && this.filesToAttach.some(file => file.formKey === 'archivosAnexos');
+       && this.filesToAttach.some((file: any) => file.formKey === 'archivosAnexos');
      
      if (shouldModifyAnexosInfo) {
        this.requestBody.archivosAnexosInfo = [];

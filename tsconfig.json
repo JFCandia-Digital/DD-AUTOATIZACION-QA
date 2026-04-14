@@ -6,10 +6,9 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "lib": ["esnext", "dom"],
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "target": "esnext",
-    "module": "commonjs",
-    "baseUrl": ".",
+    "module": "node16",
     "types": ["node"]
   },
   "include": ["src/**/*"]

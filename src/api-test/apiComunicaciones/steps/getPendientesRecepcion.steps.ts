@@ -24,7 +24,7 @@ Given('que preparo una petición "GET" a {string} con token {string}', async fun
  */
 When('con los siguientes parámetros de consulta:', function (this: any, dataTable: DataTable) {
   const params = dataTable.rows();
-  const paramsObject = {};
+  const paramsObject: Record<string, string> = {};
 
   for (let i =0; i < params.length; i++) {
     const parametro = params[i][0].trim();

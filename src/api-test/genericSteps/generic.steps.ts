@@ -43,7 +43,7 @@ Then('el cuerpo de la respuesta debe tener la propiedad {string} con el valor {}
 
 Then('el cuerpo de la respuesta debe tener la estructura de éxito {string}', function (this: any, structureName: string) {
   try {
-    const expectedStructure = successStructures[structureName];
+    const expectedStructure = (successStructures as Record<string, any>)[structureName];
     if (!expectedStructure) {
       throw new Error(`La estructura de éxito llamada '${structureName}' no está definida en src/api-test/data/schemas.ts`);
     }
@@ -58,7 +58,7 @@ Then('el cuerpo de la respuesta debe tener la estructura de éxito {string}', fu
 
 Then('el cuerpo de la respuesta debe tener la estructura de error {string}', function (this: any, structureName: string) {
   try {
-    const expectedStructure = errorStructures[structureName];
+    const expectedStructure = (errorStructures as Record<string, any>)[structureName];
     if (!expectedStructure) {
       throw new Error(`La estructura llamada '${structureName}' no está definida en src/api-test/data/schemas.ts`);
     }

@@ -165,7 +165,7 @@ export function attachReport(worldContext: any, part: 'request' | 'status' | 're
 
         if (typeToken) {
           const headers = buildAuthConfig(typeToken);
-          authValue = headers.Authorization || 'N/A (Omitido)';
+          authValue = headers?.Authorization || 'N/A (Omitido)';
         } else { authValue = apiContext.attachData.authorizationHeader || 'N/A'; }
         worldContext.attach(
           `Authorization Header: ${authValue || 'N/A'}`,
@@ -175,7 +175,7 @@ export function attachReport(worldContext: any, part: 'request' | 'status' | 're
     }
   } catch (e) {
     worldContext.attach(
-      `Error al adjuntar la parte '${part}' del reporte: ${e.message}`,
+      `Error al adjuntar la parte '${part}' del reporte: ${e instanceof Error ? e.message : String(e)}`,
       { mediaType: 'text/plain', fileName: 'ReportError.txt' }
     );
   }

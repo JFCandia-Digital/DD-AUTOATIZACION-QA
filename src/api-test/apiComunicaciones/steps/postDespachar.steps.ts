@@ -54,7 +54,7 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
   if (bodyName.toLowerCase() === '(null)') {
     return;
   }
-  const requestBodyOriginal = comunicacionRequest[bodyName];
+  const requestBodyOriginal = (comunicacionRequest as Record<string, any>)[bodyName];
   if (!requestBodyOriginal) {
     throw new Error(`El cuerpo '${bodyName}' no se encuentra en requestBodies.ts`);
   }
@@ -88,7 +88,7 @@ When('envío la petición multipart', { timeout: 60 * 1000 }, async function (th
     && 'archivosAnexosInfo' in this.requestBody 
     && Array.isArray(this.requestBody.archivosAnexosInfo)
     && this.requestBody.archivosAnexosInfo.length > 0
-    && this.filesToAttach.some(file => file.formKey === 'archivosAnexos');
+    && this.filesToAttach.some((file: any) => file.formKey === 'archivosAnexos');
   
   if (shouldModifyAnexosInfo) {
     this.requestBody.archivosAnexosInfo = [];
