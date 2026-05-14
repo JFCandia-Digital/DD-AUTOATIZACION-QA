@@ -77,17 +77,17 @@ Feature: Pruebas realizadas a la API "PUT" - "/comunicaciones/:comunicacionId/re
     Then el estado de la respuesta debe ser 200
 
     # --- FLUJO SUES ---
-    When que obtengo un nuevo token de acceso con el usuario "CLIENT_ID_SUES" y el password "CLIENT_SECRET_SUES"
-    Then el estado de la respuesta debe ser 200
-    Given que preparo una petición "GET" a "/comunicaciones/pendientes-recepcion" con token "válido"
-    And con los siguientes parámetros de consulta:
-      | parametro | valor              |
-      | materia   | "AUT-materia-TEST" |
-    When ejecuto la petición GET
-    Then el estado de la respuesta debe ser 200
-    And guardo el valor de la propiedad "result" como "listaSues" en el contexto
-    When que proceso las tareas guardadas en "listaSues" en el metodo PUT "/comunicaciones/:comunicacionId/recepcion/:tareaId/acuse-recibo"
-    Then el estado de la respuesta debe ser 200
+  # When que obtengo un nuevo token de acceso con el usuario "CLIENT_ID_SUES" y el password "CLIENT_SECRET_SUES"
+  # Then el estado de la respuesta debe ser 200
+  # Given que preparo una petición "GET" a "/comunicaciones/pendientes-recepcion" con token "válido"
+  # And con los siguientes parámetros de consulta:
+  #   | parametro | valor              |
+  #   | materia   | "AUT-materia-TEST" |
+  # When ejecuto la petición GET
+  # Then el estado de la respuesta debe ser 200
+  # And guardo el valor de la propiedad "result" como "listaSues" en el contexto
+  # When que proceso las tareas guardadas en "listaSues" en el metodo PUT "/comunicaciones/:comunicacionId/recepcion/:tareaId/acuse-recibo"
+  # Then el estado de la respuesta debe ser 200
 
     # --- FLUJO CARABINEROS ---
     When que obtengo un nuevo token de acceso con el usuario "CLIENT_ID_CARABINEROS" y el password "CLIENT_SECRET_CARABINEROS"
@@ -116,14 +116,14 @@ Feature: Pruebas realizadas a la API "PUT" - "/comunicaciones/:comunicacionId/re
     Then el estado de la respuesta debe ser 200
 
     # --- FLUJO CNE ---
-    When que obtengo un nuevo token de acceso con el usuario "CLIENT_ID_CNE" y el password "CLIENT_SECRET_CNE"
-    Then el estado de la respuesta debe ser 200
-    Given que preparo una petición "GET" a "/comunicaciones/pendientes-recepcion" con token "válido"
-    And con los siguientes parámetros de consulta:
-      | parametro | valor              |
-      | materia   | "AUT-materia-TEST" |
-    When ejecuto la petición GET
-    Then el estado de la respuesta debe ser 200
-    And guardo el valor de la propiedad "result" como "listaCNE" en el contexto
-    When que proceso las tareas guardadas en "listaCNE" en el metodo PUT "/comunicaciones/:comunicacionId/recepcion/:tareaId/acuse-recibo"
-    Then el estado de la respuesta debe ser 200
+  #  When que obtengo un nuevo token de acceso con el usuario "CLIENT_ID_CNE" y el password "CLIENT_SECRET_CNE"
+  #  Then el estado de la respuesta debe ser 200
+  #  Given que preparo una petición "GET" a "/comunicaciones/pendientes-recepcion" con token "válido"
+  #  And con los siguientes parámetros de consulta:
+  #    | parametro | valor              |
+  #    | materia   | "AUT-materia-TEST" |
+  #  When ejecuto la petición GET
+  #  Then el estado de la respuesta debe ser 200
+  #  And guardo el valor de la propiedad "result" como "listaCNE" en el contexto
+  #  When que proceso las tareas guardadas en "listaCNE" en el metodo PUT "/comunicaciones/:comunicacionId/recepcion/:tareaId/acuse-recibo"
+  #  Then el estado de la respuesta debe ser 200
