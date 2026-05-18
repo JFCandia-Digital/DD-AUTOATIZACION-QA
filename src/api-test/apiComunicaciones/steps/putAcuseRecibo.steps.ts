@@ -37,12 +37,15 @@ When('que {string} las tareas guardadas en {string} con el comentario {string}',
     throw new Error(`Acción no reconocida: ${accion}. Use "acepto" o "rechazo".`);
   }
 
-  const requestBody = {
-    isRechazada: isRechazada,
-    comentarios: comentario
-  };
+const materia = apiContext.worldData.get("materiaActual"); 
+const requestBody = {
+  isRechazada: isRechazada,
+  comentarios: `${comentario} (Materia: ${materia})`
+};
+
 
   const tareas = apiContext.worldData.get(key);
+
 
   if (!Array.isArray(tareas)) {
     throw new Error(`No se encontró un array en el contexto con la clave: ${key}`);
@@ -110,7 +113,7 @@ When('que proceso las tareas guardadas en {string} en el metodo PUT {string}', {
   for (const tarea of tareas) {
     const comId = _.get(tarea, 'comunicacionId');
     const tareaId = _.get(tarea, 'tareaId');
-    const materia = _.get(tarea, 'comunicacionMateria', '');
+    const materia = apiContext.worldData.get("materiaActual")
 
     if (!comId || !tareaId) {
       console.error("Tarea omitida por falta de IDs:", tarea);

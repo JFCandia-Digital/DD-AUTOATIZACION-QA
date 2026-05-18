@@ -65,6 +65,13 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
   if (requestBody.materia === "AUT-materia-TEST") {
     requestBody.materia = `AUT-materia-TEST-${dynamicTimestamp}`;
   }
+
+  
+  // ✅ ESTE ES EL PASO CLAVE (AGREGAR)
+  apiContext.worldData.set("materiaActual", requestBody.materia);
+  
+  console.log("✅ Materia capturada del POST:", requestBody.materia)
+
   
   if (requestBody.folio === "FOLIO-BASE-2025") {
     requestBody.folio = `AUT-folio-TEST-${dynamicTimestamp}-Prueba Automatizada`;
