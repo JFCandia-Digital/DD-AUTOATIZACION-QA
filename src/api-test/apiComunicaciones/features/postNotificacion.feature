@@ -27,17 +27,20 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar-tipo-no
     When envío la petición multipart
     Then el estado de la respuesta debe ser 400
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
-    And el cuerpo de la respuesta debe tener la propiedad <campo_error> con el valor <mensaje_error_esperado>
+    And el cuerpo de la respuesta debe tener la propiedad "errorCode" con el valor 40000
+    And el cuerpo de la respuesta debe tener la propiedad "error" con el valor <mensaje_error_esperado>
 
     Examples: Campos obligatorios PA (400 - Validation failure)
-      | body_name                                    | campo_error | mensaje_error_esperado |
-      | JSON_NOTIFICACION_SIN_DESTINATARIOS          | "message"   | "Petición no válida."  |
-      | JSON_NOTIFICACION_SIN_CONFIGURACION_DESTINATARIOS | "message" | "Petición no válida." |
-      | JSON_NOTIFICACION_SIN_USUARIO_SOLICITANTE    | "message"   | "Petición no válida."  |
-      | JSON_NOTIFICACION_SIN_RUN_USUARIO_SOLICITANTE | "message"  | "Petición no válida."  |
-      | JSON_NOTIFICACION_SIN_DV_USUARIO_SOLICITANTE | "message"   | "Petición no válida."  |
-      | JSON_NOTIFICACION_SIN_TIPO_PROCEDIMIENTO     | "message"   | "Petición no válida."  |
+      | body_name                                         | mensaje_error_esperado                              |
+      | JSON_NOTIFICACION_SIN_DESTINATARIOS                 | "Se requiere al menos una entidad destinataria"     |
+      | JSON_NOTIFICACION_SIN_CONFIGURACION_DESTINATARIOS   | "configuracionDestinatarios es obligatorio"       |
+      | JSON_NOTIFICACION_SIN_USUARIO_SOLICITANTE           | "Usuario solicitante es obligatorio"              |
+      | JSON_NOTIFICACION_SIN_RUN_USUARIO_SOLICITANTE       | "RUN del usuario es obligatorio"                    |
+      | JSON_NOTIFICACION_SIN_DV_USUARIO_SOLICITANTE        | "Digito verificador del RUN es obligatorio"         |
+      | JSON_NOTIFICACION_SIN_TIPO_PROCEDIMIENTO            | "tipoProcedimientoAdministrativo es obligatorio"    |
 
+  # Con PDF sin firma, si el JSON es válido el API valida firma (4001) antes que dependientes.
+  # Cuando exista PDF firmado, reforzar este escenario con el mensaje de negocio de dependientes.
   @Notificacion_Dependientes
   Scenario: Validar rechazo de notificación con destinatario no dependiente de la entidad despachadora
     Given que preparo una petición "POST" a "/comunicaciones/despachar-tipo-notificacion" con token "válido"
@@ -46,4 +49,4 @@ Feature: Pruebas realizadas a la API "POST" - "/comunicaciones/despachar-tipo-no
     When envío la petición multipart
     Then el estado de la respuesta debe ser 400
     And el cuerpo de la respuesta debe tener la estructura de error "ERROR_400_Bad_Request"
-    And el cuerpo de la respuesta debe tener la propiedad "error"
+    And el cuerpo de la respuesta debe tener la propiedad "errorCode" con el valor 4001
