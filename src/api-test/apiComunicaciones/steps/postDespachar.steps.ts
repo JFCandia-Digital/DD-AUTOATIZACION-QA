@@ -66,10 +66,11 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
     requestBody.materia = `AUT-materia-TEST-${dynamicTimestamp}`;
   }
 
-  const notificacionIniciales = process.env.NOTIFICACION_QA_INICIALES || 'JFC';
-
   if (requestBody.materia === "AUT-materia-NOTIFICACION") {
-    requestBody.materia = `QA Notificacion ${notificacionIniciales} ${dynamicTimestamp}`;
+    const notificacionEtiqueta = process.env.NOTIFICACION_QA_ETIQUETA?.trim();
+    requestBody.materia = notificacionEtiqueta
+      ? `AUT-materia-NOTIFICACION-${notificacionEtiqueta}-${dynamicTimestamp}`
+      : `AUT-materia-NOTIFICACION-${dynamicTimestamp}`;
   }
 
   apiContext.worldData.set("materiaActual", requestBody.materia);
@@ -79,7 +80,10 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
   }
 
   if (requestBody.folio === "FOLIO-NOTIFICACION-BASE") {
-    requestBody.folio = `QA-NOTI-${notificacionIniciales}-${dynamicTimestamp}`;
+    const notificacionEtiqueta = process.env.NOTIFICACION_QA_ETIQUETA?.trim();
+    requestBody.folio = notificacionEtiqueta
+      ? `AUT-folio-NOTIFICACION-${notificacionEtiqueta}-${dynamicTimestamp}`
+      : `AUT-folio-NOTIFICACION-${dynamicTimestamp}`;
   }
 
   if (requestBody.descripcion === "AUT-descripcion-TEST") { 
