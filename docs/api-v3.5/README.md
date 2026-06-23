@@ -27,6 +27,6 @@ NOTIFICACION_DEPENDIENTE_CODIFICADOR_ID=<id_dependiente>
 NOTIFICACION_DESTINATARIO_PRINCIPAL_ID=66
 NOTIFICACION_DESTINATARIO_NO_DEPENDIENTE_ID=598
 
-# Etiqueta personal en materia/folio (solo tu .env.local; ej. usuario correo: jcandia)
-NOTIFICACION_QA_ETIQUETA=jcandia
+# Iniciales en materia/folio de notificación (default: JFC)
+# NOTIFICACION_QA_INICIALES=JFC
 ```
