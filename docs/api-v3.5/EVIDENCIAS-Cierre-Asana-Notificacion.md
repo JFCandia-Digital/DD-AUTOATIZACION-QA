@@ -2,7 +2,7 @@
 ## Endpoint `POST /comunicaciones/despachar-tipo-notificacion` (API MW v3.5)
 
 **Proyecto:** DD-AUTOMATIZACION-QA  
-**Rama:** `cursor/notificacion-happy-path-0e6a` (PR #2)  
+**Repositorio:** JFCandia-Digital/DD-AUTOATIZACION-QA  
 **Ambiente:** QA — `https://middleware.docv3.test.digital.gob.cl/api/v3`  
 **Token:** PDI (`CLIENT_ID_PDI` / `CLIENT_SECRET_PDI`)  
 **Ejecutor:** Juan Candia — QA Automatizador  
@@ -117,8 +117,6 @@ Adjuntar a la tarjeta Asana:
 | Scripts npm | `package.json` → `notificacion`, `notificacion_*` |
 | Manual referencia | `docs/api-v3.5/DocDigital V3_ MANUAL DE INTEGRACIÓN API MW V 3.5.docx` |
 
-**Pull Request:** [#2](https://github.com/JFCandia-Digital/DD-AUTOATIZACION-QA/pull/2) — `cursor/notificacion-happy-path-0e6a` → `main`
-
 ---
 
 ## 7. Hallazgos QA (para registro en Asana)
@@ -135,7 +133,7 @@ Adjuntar a la tarjeta Asana:
 ```
 ✅ Cierre QA Automatización — POST /comunicaciones/despachar-tipo-notificacion
 
-Se implementó y ejecutó la suite @Notificacion en DD-AUTOMATIZACION-QA (rama cursor/notificacion-happy-path-0e6a, PR #2).
+Se implementó y ejecutó la suite @Notificacion en DD-AUTOMATIZACION-QA.
 
 Ejecución final: npm run notificacion_report
 Resultado: 11 scenarios (11 passed) | 97 steps | ~14 s
@@ -157,10 +155,10 @@ Ambiente: middleware QA v3 | Token PDI | Despachadora 598 | Dependiente 4758
 
 ## 9. Checklist cierre QA Automatizador
 
-- [ ] `git pull` rama `cursor/notificacion-happy-path-0e6a`
+- [ ] Código integrado en repositorio DD-AUTOMATIZACION-QA
 - [x] `npm run notificacion_report` → 11/11 passed (23-06-2026)
 - [x] `npm run api-report` → reporte HTML generado (`reports/index.html`)
 - [ ] Adjuntar reporte + captura terminal en Asana
 - [ ] Registrar hallazgo H-01 si aplica seguimiento backend
-- [ ] Merge PR #2 a `main`
+- [ ] Código en rama `main` del repositorio
 - [ ] Mover tarjeta Asana a **Done** / estado acordado por el equipo

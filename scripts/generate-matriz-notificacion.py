@@ -270,7 +270,7 @@ def main():
     ws.cell(
         row=summary_row,
         column=2,
-        value="npm run notificacion_report → 11 scenarios (11 passed) | 12 casos matriz | PR #2",
+        value="npm run notificacion_report → 11 scenarios (11 passed) | 12 casos matriz",
     )
 
     wb.save(OUTPUT)

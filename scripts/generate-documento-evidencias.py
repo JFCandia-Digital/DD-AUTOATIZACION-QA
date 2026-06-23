@@ -95,7 +95,7 @@ def main():
         ("Versión API", "Middleware v3.5"),
         ("Fecha de ejecución", "23 de junio de 2026"),
         ("Ejecutado por", "Juan Candia — QA Automatizador"),
-        ("Repositorio / Rama", "JFCandia-Digital/DD-AUTOATIZACION-QA — cursor/notificacion-happy-path-0e6a (PR #2)"),
+        ("Repositorio", "JFCandia-Digital/DD-AUTOATIZACION-QA"),
         ("Resultado global", "12 casos de prueba — 12 PASS | Suite Cucumber: 11 scenarios (11 passed)"),
     ])
 
@@ -198,7 +198,7 @@ def main():
         ("E-02", "Terminal ejecución", "npm run notificacion_report — 11 scenarios (11 passed)", "Captura terminal"),
         ("E-03", "Correos DocDigital", "Comunicaciones 89679, 89682, 89685, 89687", "Captura bandeja correo no-reply"),
         ("E-04", "Matriz de pruebas", "matriz_api_notificacion_DocDigital.xlsx", "Archivo Excel 12 casos TC-NOTIF"),
-        ("E-05", "Código automatización", "postNotificacion.feature + steps + requestBodies", "PR #2 en GitHub"),
+        ("E-05", "Código automatización", "postNotificacion.feature + steps + requestBodies", "Repositorio DD-AUTOMATIZACION-QA"),
         ("E-06", "Respuestas API", "JSON 200/400 con errorCode 4001 y 40000", "Attachments en reporte Cucumber"),
     ]
     t2 = doc.add_table(rows=1, cols=4)
@@ -242,8 +242,8 @@ def main():
         "procesadas correctamente por el sistema."
     )
     doc.add_paragraph(
-        "Se recomienda el merge del PR #2 a main y el cierre de la tarjeta Asana, "
-        "dejando registrados los hallazgos H-01 y H-02 para seguimiento con el equipo funcional."
+        "Se recomienda el cierre de la tarjeta Asana, dejando registrados los hallazgos H-01 y H-02 "
+        "para seguimiento con el equipo funcional."
     )
 
     # 9. Anexos
