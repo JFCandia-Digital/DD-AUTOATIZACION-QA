@@ -1,95 +1,42 @@
-import { When, Then } from '@cucumber/cucumber';
-import FormData from 'form-data';
+import { Then, When } from '@cucumber/cucumber';
 import fs from 'fs';
-import { sendPostMultipartRequest } from '../../../common/support/apiClient';
+import path from 'path';
 import { apiContext } from '../../../common/support/apiContext';
+import { PATHS } from '../../../common/support/constants';
 
-When('envío comunicación tipo notificación válida', async function () {
+function resolveDocumentoSinFirma(): { filePath: string; fileName: string } {
+  const fileName = process.env.NOTIFICACION_DOC_SIN_FIRMA || 'Prueba.pdf';
+  const candidates = [
+    process.env.NOTIFICACION_DOC_SIN_FIRMA_PATH,
+    path.join(PATHS.FILES_DIRECTORY, fileName),
+    path.join('C:', 'temp', fileName),
+  ].filter(Boolean) as string[];
 
-  const formData = new FormData();
+  for (const filePath of candidates) {
+    if (fs.existsSync(filePath)) {
+      return { filePath, fileName: path.basename(filePath) };
+    }
+  }
 
-  formData.append(
-    'comunicacionRequest',
-    JSON.stringify({
-      materia: `QA Notificacion ${Date.now()}`,
-      folio: `QA-${Date.now()}`,
-      isReservado: false,
-      incorporaAnexos: true,
-
-      configuracionDestinatarios: {
-        destinatarios: [
-          {
-            entidadDestinatariaCodificadorId: 66 // ✅ usar misma entidad del token
-          }
-        ]
-      },
-
-      entidadDespachadoraCodificadorId: 66,
-
-      usuarioSolicitante: {
-        run: 11111111,
-        dv: "1"
-      },
-
-      tipoProcedimientoAdministrativo: {
-        id: 999,
-        codigo: "PROC0999_OTROS",
-        descripcion: "Otro procedimiento administrativo"
-      }
-
-    }),
-    { contentType: 'application/json' }
+  throw new Error(
+    `No se encontró documento sin firma para notificación. Rutas probadas: ${candidates.join(', ')}`
   );
+}
 
-  formData.append(
-    'documentoPrincipal',
-    fs.createReadStream('C:/temp/Prueba.pdf') // ✅ PDF sin firma (para test 400)
-  );
+When('adjunto el documento principal sin firma para notificación', function (this: any) {
+  const { filePath, fileName } = resolveDocumentoSinFirma();
 
-  await sendPostMultipartRequest(
-    '/comunicaciones/despachar-tipo-notificacion',
-    'válido',
-    formData
-  );
+  this.filesToAttach.push({
+    formKey: 'documentoPrincipal',
+    fileName,
+    filePath,
+  });
 
-  this.response = apiContext.response;
+  apiContext.attachData.requestBody['documentoPrincipal'] = `(Archivo: ${fileName})`;
 });
-
-
-Then('la respuesta debe ser {int}', function (status: number) {
-  const response = this.response || apiContext.response;
-
-  if (!response) {
-    throw new Error('Response no definida');
-  }
-
-  if (response.status !== status) {
-    throw new Error(
-      `Esperado: ${status}, obtenido: ${response.status}\n${JSON.stringify(response.data, null, 2)}`
-    );
-  }
-});
-
-
-Then('el código de error debe ser {int}', function (expectedErrorCode: number) {
-
-  const response = this.response || apiContext.response;
-
-  if (!response) {
-    throw new Error('Response no definida');
-  }
-
-  if (response.data?.errorCode !== expectedErrorCode) {
-    throw new Error(
-      `Esperado errorCode: ${expectedErrorCode}, obtenido: ${response.data?.errorCode}\n${JSON.stringify(response.data, null, 2)}`
-    );
-  }
-
-});
-
 
 Then('la respuesta debe contener un id', function () {
-  const response = this.response || apiContext.response;
+  const response = apiContext.response;
 
   if (!response) {
     throw new Error('Response no definida');

@@ -149,35 +149,30 @@ const JSON_MINIMO_VALIDO_RI_RECEPCION_IGUAL = {
 };
 
 
-//--Modificado JFC 22-06
-export const JSON_NOTIFICACION_VALIDO = {
-  materia: `QA Notificacion ${Date.now()}`,
-  folio: `QA-NOTI-${Date.now()}`,
-  isReservado: false,
-  incorporaAnexos: true,
-
-  configuracionDestinatarios: {
-    destinatarios: [
+const JSON_NOTIFICACION_VALIDO = {
+  "materia": "AUT-materia-NOTIFICACION",
+  "folio": "FOLIO-NOTIFICACION-BASE",
+  "isReservado": false,
+  "incorporaAnexos": true,
+  "configuracionDestinatarios": {
+    "destinatarios": [
       {
-        entidadDestinatariaCodificadorId: 167 // ⚠️ usa uno real (ej: ARMADA)
+        "entidadDestinatariaCodificadorId": 66,
+        "isEnCopia": false
       }
     ]
   },
-
-  entidadDespachadoraCodificadorId: 66,
-
-  usuarioSolicitante: {
-    run: 11111111, // ⚠️ usa el RUN real de tu token si aplica
-    dv: "1"
+  "entidadDespachadoraCodificadorId": 66,
+  "usuarioSolicitante": {
+    "run": 11111111,
+    "dv": "1"
   },
-
-  tipoProcedimientoAdministrativo: {
-    id: 999,
-    codigo: "PROC0999_OTROS",
-    descripcion: "Otro procedimiento administrativo"
+  "tipoProcedimientoAdministrativo": {
+    "id": 999,
+    "codigo": "PROC0999_OTROS",
+    "descripcion": "Otro procedimiento administrativo"
   }
 };
-``
 
 // Variante con fechaHoraRecepcion > fechaHoraDespachoExterno (más reciente)
 const JSON_MINIMO_VALIDO_RI_RECEPCION_MAYOR = {
@@ -1274,6 +1269,7 @@ export const registroExternoRequest = {
 
 export const comunicacionRequest = {
   // Happy Paths
+  "JSON_NOTIFICACION_VALIDO": JSON_NOTIFICACION_VALIDO,
   "JSON_MINIMO_VALIDO": JSON_MINIMO_VALIDO,
   "JSON_CON_ARCHIVOS_ANEXOS": JSON_CON_ARCHIVOS_ANEXOS,
   "JSON_SWAGGER_MINIMUM": JSON_SWAGGER_MINIMUM,

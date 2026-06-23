@@ -66,15 +66,18 @@ Then('uso el cuerpo de petición llamado {string} como campo {string}', function
     requestBody.materia = `AUT-materia-TEST-${dynamicTimestamp}`;
   }
 
-  
-  // ✅ ESTE ES EL PASO CLAVE (AGREGAR)
-  apiContext.worldData.set("materiaActual", requestBody.materia);
-  
-  console.log("✅ Materia capturada del POST:", requestBody.materia)
+  if (requestBody.materia === "AUT-materia-NOTIFICACION") {
+    requestBody.materia = `QA Notificacion ${dynamicTimestamp}`;
+  }
 
-  
+  apiContext.worldData.set("materiaActual", requestBody.materia);
+
   if (requestBody.folio === "FOLIO-BASE-2025") {
     requestBody.folio = `AUT-folio-TEST-${dynamicTimestamp}-Prueba Automatizada`;
+  }
+
+  if (requestBody.folio === "FOLIO-NOTIFICACION-BASE") {
+    requestBody.folio = `QA-NOTI-${dynamicTimestamp}`;
   }
 
   if (requestBody.descripcion === "AUT-descripcion-TEST") { 
