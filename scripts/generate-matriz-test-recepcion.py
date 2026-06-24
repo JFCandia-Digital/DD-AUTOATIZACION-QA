@@ -26,7 +26,7 @@ HEADERS = [
 
 AMBIENTE = "QA - API v3.5"
 EJECUTOR = "Juan Francisco Candia"
-FECHA = "Pendiente"
+FECHA = "24-06-2026"
 TARJETA = "QA-5687"
 ENDPOINT = "POST /pruebas-integracion/comunicaciones/test-recepcion"
 
@@ -301,10 +301,10 @@ ROWS = [
         BASE_PRECOND,
         f"{ENDPOINT} 200 | GET /comunicaciones/pendientes-recepcion?materia=... | PUT /comunicaciones/{{id}}/recepcion/{{tareaId}}/acuse-recibo (isRechazada: false)",
         "POST 200; comunicación aparece en pendientes; acuse 200; flujo recepción completado",
-        "Pendiente ejecución — postTestRecepcionE2E.feature @TestRecepcion_E2E_Acuse",
-        "Pendiente",
+        "200 OK — com. 89728, tarea 618820, PUT acuse completada (24-06-2026 13:59:39)",
+        "PASS",
         AMBIENTE,
-        "Cucumber @TestRecepcion_E2E_Acuse; reports/index.html",
+        "Cucumber @TestRecepcion_E2E_Acuse; reports/index.html; correo 89728",
         FECHA,
         EJECUTOR,
         "User story: probar método de recepción",
@@ -317,10 +317,10 @@ ROWS = [
         BASE_PRECOND,
         f"{ENDPOINT} 200 | GET pendientes-recepcion | PUT acuse-recibo con isRechazada: true",
         "POST 200; comunicación en pendientes; rechazo 200; flujo rechazo completado",
-        "Pendiente ejecución — postTestRecepcionE2E.feature @TestRecepcion_E2E_Rechazo",
-        "Pendiente",
+        "200 OK — com. 89729, tarea 618823, PUT rechazo completada (24-06-2026 13:59:41)",
+        "PASS",
         AMBIENTE,
-        "Cucumber @TestRecepcion_E2E_Rechazo; reports/index.html",
+        "Cucumber @TestRecepcion_E2E_Rechazo; reports/index.html; correo 89729",
         FECHA,
         EJECUTOR,
         "User story: probar método de rechazo",

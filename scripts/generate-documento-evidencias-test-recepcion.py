@@ -60,13 +60,13 @@ CASOS = [
      "1 POST = 1 id", "Un id por request",
      "Validado en suite (89722–89726 distintos)", "PASS", "Suite Cucumber"),
     ("TC-INT-017", "API / E2E", "Flujo acuse de recibo",
-     "POST → GET pendientes → PUT acuse", "Flujo recepción completo",
-     "Pendiente ejecución E2E — npm run test_recepcion_e2e", "Pendiente",
-     "postTestRecepcionE2E.feature @TestRecepcion_E2E_Acuse"),
+     "POST → GET pendientes → PUT acuse (isRechazada: false)", "Flujo recepción completo",
+     "200 OK — com. 89728, tarea 618820, acuse completada (24-06-2026 13:59:39)", "PASS",
+     "reports/index.html; correo DocDigital 89728; @TestRecepcion_E2E_Acuse"),
     ("TC-INT-018", "API / E2E", "Flujo rechazo",
-     "POST → GET pendientes → PUT rechazo", "Flujo rechazo completo",
-     "Pendiente ejecución E2E — npm run test_recepcion_e2e", "Pendiente",
-     "postTestRecepcionE2E.feature @TestRecepcion_E2E_Rechazo"),
+     "POST → GET pendientes → PUT rechazo (isRechazada: true)", "Flujo rechazo completo",
+     "200 OK — com. 89729, tarea 618823, rechazo completada (24-06-2026 13:59:41)", "PASS",
+     "reports/index.html; correo DocDigital 89729; @TestRecepcion_E2E_Rechazo"),
 ]
 
 BLOQUEO = [
@@ -76,6 +76,8 @@ BLOQUEO = [
      "Credenciales entidad test en INFRA QA"),
     ("24-06-2026", "POST test-recepcion → HTTP 200 — ids 89721 (probe), 89722–89726 (suite)",
      "Tarjeta destrabada — automatización ejecutada"),
+    ("24-06-2026", "E2E OP — ids 89728 (acuse tarea 618820), 89729 (rechazo tarea 618823) — 2/2 passed",
+     "Flujo integrador completo validado (Patricia)"),
 ]
 
 
@@ -125,7 +127,7 @@ def main():
         ("Fecha de ejecución", "24 de junio de 2026"),
         ("Ejecutado por", "Juan Francisco Candia (JFC) — QA Automatizador"),
         ("Repositorio", "JFCandia-Digital/DD-AUTOATIZACION-QA (rama main)"),
-        ("Resultado global", "9 casos PASS automatizados | Suite Cucumber: 10 scenarios (10 passed)"),
+        ("Resultado global", "11 casos PASS automatizados | Cucumber: 12 scenarios (12 passed)"),
     ])
 
     doc.add_page_break()
@@ -187,13 +189,14 @@ def main():
     add_heading(doc, "5. Resumen ejecutivo de resultados", 1)
     add_kv_table(doc, [
         ("Total casos matriz", "18"),
-        ("Casos PASS (automatizados)", "9 (TC-INT-001 a 009 + 016)"),
-        ("Casos pendientes", "8 (TC-INT-010 a 015, 017, 018)"),
-        ("Escenarios Cucumber @TestRecepcion", "10"),
-        ("Steps ejecutados", "70"),
-        ("Tiempo ejecución suite", "~14 segundos"),
-        ("Comunicaciones creadas", "89721 (probe), 89722, 89723, 89724, 89725, 89726"),
-        ("Correos DocDigital recibidos", "6 (89721–89726)"),
+        ("Casos PASS (automatizados)", "11 (TC-INT-001 a 009, 016, 017, 018)"),
+        ("Casos pendientes", "6 (TC-INT-010 a 015)"),
+        ("Escenarios Cucumber @TestRecepcion", "10 (POST) + 2 (E2E OP)"),
+        ("Steps ejecutados E2E", "28 (2 scenarios passed)"),
+        ("Tiempo ejecución E2E", "~5 segundos"),
+        ("Comunicaciones creadas", "89721–89726 (POST), 89728 (acuse), 89729 (rechazo)"),
+        ("Correos DocDigital recibidos", "8 (89721–89729)"),
+        ("Tareas OP procesadas", "618820 (acuse), 618823 (rechazo)"),
         ("Reporte HTML", "reports/index.html — 100% scenarios passed"),
     ])
 
@@ -201,7 +204,9 @@ def main():
     doc.add_paragraph(
         "Tras la configuración de credenciales entidad test por infraestructura (Pablo), "
         "el endpoint respondió HTTP 200 de forma consistente. Los despachos exitosos "
-        "generaron correos de recepción DocDigital, confirmando el flujo end-to-end."
+        "generaron correos de recepción DocDigital. El flujo E2E en OP receptora "
+        "(pendientes-recepcion + acuse/rechazo) fue validado con comunicaciones 89728 y 89729, "
+        "confirmando que la entidad del token OAuth (PDI en QA) recibe y procesa en su OP."
     )
 
     doc.add_page_break()
